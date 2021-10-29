@@ -1,12 +1,7 @@
-import TaskResolver from 'src/resolvers/TaskResolver';
 import { ID, ObjectType, Field } from 'type-graphql';
 
 @ObjectType()
 export default class Task {
-  static find() {
-    [Task];
-  }
-
   @Field(() => ID)
   id!: string;
 
@@ -25,7 +20,6 @@ export default class Task {
   @Field(() => String)
   assignee!: string;
 
-  @Field(() => Date)
-  dueDate!: Date;
+  @Field(() => String)
+  dueDate!: string;
 }
-// export const TaskModel = getModelForClass(Task);
