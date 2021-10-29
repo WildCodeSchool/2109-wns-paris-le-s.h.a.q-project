@@ -1,0 +1,8 @@
+{
+    "type": "mongodb",
+    "host": "localhost", 
+    "port": 27017,
+    "database": "taskmanager",
+    "entities": ["./src/models/*.ts"],
+    "synchronize": true
+  }

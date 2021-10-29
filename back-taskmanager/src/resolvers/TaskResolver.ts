@@ -1,11 +1,11 @@
 /* eslint-disable class-methods-use-this */
-import { Resolver, Query } from "type-graphql";
-import TaskModel from "../models/TaskModel";
+import { Resolver, Query } from 'type-graphql';
+import Task from '../models/Task';
 
 @Resolver()
 export default class TaskResolver {
-  @Query(() => [TaskModel])
+  @Query(() => [Task])
   tasks() {
-    return TaskModel;
+    return Task.find();
   }
 }
