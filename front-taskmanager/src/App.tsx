@@ -6,7 +6,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Button, TextField } from '@mui/material';
 import { useQuery, gql} from '@apollo/client';
+import "./App.css"
 
 export const GET_TASK = gql`
   query allTasks {
@@ -34,11 +36,13 @@ interface ITaskData{
 export default function App () {
 
   const { loading, error, data } = useQuery(GET_TASK);
+  
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
+    
   return (
-
+    <div className="App">
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
@@ -51,7 +55,7 @@ export default function App () {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row:ITaskData) => (
+          {data.allTasks.map((row:ITaskData) => (
             <TableRow
               key={row.subject}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -68,6 +72,9 @@ export default function App () {
         </TableBody>
       </Table>
     </TableContainer>
+    <TextField/>
+    <Button type="submit" variant="contained">submit</Button>
+  </div>
   )
 };
 
