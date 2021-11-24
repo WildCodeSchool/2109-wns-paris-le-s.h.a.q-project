@@ -15,15 +15,26 @@ describe('Task Resolver', () => {
       const createTaskMutation = gql`
         mutation CreateTask($input: CreateTaskInput!) {
           createTask(input: $input) {
-            _id
+            id
             subject
             project
+            description
+            assignee
+            dueDate
+            status
           }
         }
       `;
 
       const variables = {
-        input: { subject: 'Database', project: 'Task Manager' },
+        input: {
+          subject: 'Front',
+          project: 'Task Manager',
+          description: 'blablabla',
+          assignee: 'sofiane',
+          dueDate: '24/12/21',
+          status: 'to do',
+        },
       };
 
       const res = await server.executeOperation({
@@ -35,12 +46,16 @@ describe('Task Resolver', () => {
 
       expect(taskFromResponse).toEqual(
         expect.objectContaining({
-          subject: 'Database',
+          subject: 'Front',
           project: 'Task Manager',
+          description: 'blablabla',
+          assignee: 'sofiane',
+          dueDate: '24/12/21',
+          status: 'to do',
         })
       );
 
-      const taskInDb = await TaskModel.findById(taskFromResponse._id);
+      const taskInDb = await TaskModel.findById(taskFromResponse.id);
       expect(taskInDb?.subject).toBe(taskFromResponse.subject);
     });
   });
@@ -71,21 +86,26 @@ describe('Task Resolver', () => {
       const allTasksQuery = gql`
         query allTasks {
           allTasks {
-            _id
+            id
             subject
             project
+            description
+            assignee
+            dueDate
+            status
           }
         }
       `;
       const res = await server.executeOperation({
         query: allTasksQuery,
       });
+
       expect(res.data?.allTasks).toEqual([
         expect.objectContaining(task1Data),
         expect.objectContaining(task2Data),
       ]);
 
-      expect(res.data?.allTasks[0]._id).toBe(task1InDb._id.toString());
+      expect(res.data?.allTasks[0].id).toBe(task1InDb.id.toString());
     });
   });
 });

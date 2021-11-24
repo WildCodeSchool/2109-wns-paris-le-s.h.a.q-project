@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
-import { Resolver, Query } from 'type-graphql';
+import { Resolver, Query, Mutation, Arg } from 'type-graphql';
+import CreateTaskInput from '../entity/CreateTaskInput';
 import Task from '../entity/Task';
 import TaskModels from '../models/TaskModels';
 
@@ -11,12 +12,14 @@ class TaskResolver {
     return tasks;
   }
 
-  /*   @Mutation(() => Book)
-async createBook(@Arg("data") data: CreateBookInput) {
-  const book = Book.create(data);
-  await book.save();
-  return book;
-} */
+  @Mutation(() => Task)
+  async createTask(
+    @Arg('input') createTaskInput: CreateTaskInput
+  ): Promise<Task> {
+    const newTask = new TaskModels(createTaskInput);
+    await newTask.save();
+    return newTask;
+  }
 
   /* @Mutation(() => Book)
 async updateBook(@Arg("id") id: string, @Arg("data") data: UpdateBookInput) {

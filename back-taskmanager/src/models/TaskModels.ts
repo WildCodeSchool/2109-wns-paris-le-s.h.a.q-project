@@ -13,7 +13,7 @@ import mongoose from 'mongoose';
 // export default taskModel;
 
 interface TaskData {
-  _id: string;
+  id: string;
   subject: string;
   project: string;
   description: string;

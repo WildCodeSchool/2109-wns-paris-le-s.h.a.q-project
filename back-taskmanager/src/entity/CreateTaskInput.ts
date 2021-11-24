@@ -17,6 +17,6 @@ export default class CreateTaskInput {
   @Field(() => String)
   assignee!: string;
 
-  @Field(() => Date)
-  dueDate!: Date;
+  @Field(() => String)
+  dueDate!: string;
 }
