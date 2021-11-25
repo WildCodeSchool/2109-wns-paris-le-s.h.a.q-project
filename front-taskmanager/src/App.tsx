@@ -8,7 +8,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, TextField } from '@mui/material';
 import { useQuery, gql} from '@apollo/client';
-import "./App.css"
+import "./App.css";
+import TaskInput from "./components/TaskInput";
 
 export const GET_TASK = gql`
   query allTasks {
@@ -72,8 +73,8 @@ export default function App () {
         </TableBody>
       </Table>
     </TableContainer>
-    <TextField/>
-    <Button type="submit" variant="contained">submit</Button>
+    <TaskInput/>
+    <Button type="submit" variant="contained" color="primary">submit</Button>
   </div>
   )
 };
