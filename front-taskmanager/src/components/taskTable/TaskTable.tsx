@@ -10,8 +10,8 @@ import { useQuery, gql } from '@apollo/client';
 import ITaskData from '../../interfaces/ITaskData';
 
 export const GET_TASK = gql`
-  query allTasks {
-    allTasks {
+  query allTasks($task: String!) {
+    allTasks(task: $task) {
       id
       subject
       project
@@ -23,8 +23,24 @@ export const GET_TASK = gql`
   }
 `;
 
-export const TaskTable = () => {
-  const { loading, error, data } = useQuery(GET_TASK);
+interface ITask {
+  alltasks: {
+    task: Array<{
+      id: string;
+      subject: String;
+      project: String;
+      description: String;
+      assignee: String;
+      dueDate: String;
+      status: String;
+    }>;
+  };
+}
+
+export const TaskTable = ({ task }) => {
+  const { loading, error, data } = useQuery(GET_TASK, {
+    variables: { task },
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
