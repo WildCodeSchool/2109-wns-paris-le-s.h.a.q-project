@@ -10,8 +10,8 @@ import { useQuery, gql } from '@apollo/client';
 import ITaskData from '../../interfaces/ITaskData';
 
 export const GET_TASK = gql`
-  query allTasks($task: String!) {
-    allTasks(task: $task) {
+  query allTasks {
+    allTasks {
       id
       subject
       project
@@ -23,24 +23,8 @@ export const GET_TASK = gql`
   }
 `;
 
-interface ITask {
-  alltasks: {
-    task: Array<{
-      id: string;
-      subject: String;
-      project: String;
-      description: String;
-      assignee: String;
-      dueDate: String;
-      status: String;
-    }>;
-  };
-}
-
-export const TaskTable = ({ task }) => {
-  const { loading, error, data } = useQuery(GET_TASK, {
-    variables: { task },
-  });
+const TaskTable = () => {
+  const { loading, error, data } = useQuery(GET_TASK);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -60,7 +44,7 @@ export const TaskTable = ({ task }) => {
         <TableBody>
           {data.allTasks.map((row: ITaskData) => (
             <TableRow
-              key={row.subject}
+              key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
@@ -77,3 +61,4 @@ export const TaskTable = ({ task }) => {
     </TableContainer>
   );
 };
+export default TaskTable;

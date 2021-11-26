@@ -1,66 +1,76 @@
 import React from 'react';
-import TestRenderer from 'react-test-renderer';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
+import { render, screen, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
-import { TaskTable, GET_TASK } from './TaskTable';
+import { GraphQLError } from 'graphql/error/GraphQLError';
+import TaskTable, { GET_TASK } from './TaskTable';
 import ITaskData from '../../interfaces/ITaskData';
 
-const mocks = [
-  {
-    request: {
-      query: GET_TASK,
-      variables: {
-        subject: 'Front',
-        project: 'Task Manager',
-        description: 'blablabla',
-        assignee: 'sofiane',
-        dueDate: '24/12/21',
-        status: 'to do',
-      },
-    },
-    result: {
-      data: {
-        allTasks: [
+describe('fetch all task in TaskTable', () => {
+  it('verify if its loading', () => {
+    render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <TaskTable />
+      </MockedProvider>
+    );
+    expect(screen.queryByText(/Loading/i)).toBeInTheDocument();
+  });
+
+  it('test if all tasks are displayed ', async () => {
+    render(
+      <MockedProvider
+        mocks={[
           {
-            subject: 'Front',
-            project: 'Task Manager',
-            description: 'blablabla',
-            assignee: 'sofiane',
-            dueDate: '24/12/21',
-            status: 'to do',
+            request: {
+              query: GET_TASK,
+            },
+            result: {
+              data: {
+                allTasks: [
+                  {
+                    id: '619e44bcd36de6c62c775386',
+                    subject: 'Front',
+                    project: 'Task Manager',
+                    description: 'blablabla',
+                    assignee: 'sofiane',
+                    dueDate: '24/12/21',
+                    status: 'to do',
+                  },
+                ],
+              },
+            },
           },
-        ],
-      },
-    },
-  },
-];
+        ]}
+        addTypename={false}
+      >
+        <TaskTable />
+      </MockedProvider>
+    );
 
-it('renders without error', async () => {
-  const component = TestRenderer.create(
-    <MockedProvider mocks={mocks} addTypename={false}>
-      <TableBody>
-        {data.allTasks.map((row: ITaskData) => (
-          <TableRow
-            key={row.subject}
-            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-          >
-            <TableCell component="th" scope="row">
-              {row.subject}
-            </TableCell>
-            <TableCell align="right">{row.project}</TableCell>
-            <TableCell align="right">{row.description}</TableCell>
-            <TableCell align="right">{row.assignee}</TableCell>
-            <TableCell align="right">{row.status}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </MockedProvider>
-  );
+    const element = await waitFor(() => screen.getByText('Front'));
+    expect(element).toBeInTheDocument();
+    // expect(res.data?.allTasks[0].subject).toBe(allTasks[0].subject.toString());
+  });
 
-  const tree = await component.toJSON();
-  console.log(tree);
+  it('verify if there is an error', async () => {
+    render(
+      <MockedProvider
+        mocks={[
+          {
+            request: {
+              query: GET_TASK,
+            },
+            result: {
+              errors: [new GraphQLError('Error!')],
+            },
+          },
+        ]}
+        addTypename={false}
+      >
+        <TaskTable />
+      </MockedProvider>
+    );
 
-  expect(tree.children).toContain('Loading...');
+    const element = await waitFor(() => screen.getByText('Error :('));
+    expect(element).toBeInTheDocument();
+  });
 });
