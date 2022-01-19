@@ -3,9 +3,17 @@ services:
     build: ./back-taskmanager
     ports:
       - 5050:4000
+    command: yarn start
+    volumes:
+      - ./back-taskmanager/src:/server/src
   mongodb:
     image: mongo
+    volumes:
+      - ./data:/data/db
   front-taskmanager:
-    image: front-tm
+    build: ./front-taskmanager
     ports:
       - 8080:3000
+    volumes:
+      - ./front-taskmanager/src:/app/src
+    command: yarn start
