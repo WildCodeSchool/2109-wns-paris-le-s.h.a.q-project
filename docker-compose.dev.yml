@@ -1,0 +1,11 @@
+services:
+  back-taskmanager:
+    build: ./back-taskmanager
+    ports:
+      - 5050:4000
+  mongodb:
+    image: mongo
+  front-taskmanager:
+    image: front-tm
+    ports:
+      - 8080:3000
