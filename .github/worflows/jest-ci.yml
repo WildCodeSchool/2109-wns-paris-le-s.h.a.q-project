@@ -1,0 +1,17 @@
+name: jest-ci
+
+on: 
+  push:
+    branches-ignore: 
+      - "master"
+
+jobs:
+  test-front:
+    runs-on: ubuntu-latest
+    steps:
+      -
+      name: Check out code 
+      uses: actions/checkout@v2
+      -
+      name: Goto client and run tests
+      run: cd client && yarn && yarn test 
