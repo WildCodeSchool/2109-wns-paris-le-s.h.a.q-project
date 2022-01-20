@@ -3,7 +3,7 @@ name: ci
 on:
   push:
     branches:
-      - "main"
+      - "develop"
 
 jobs:
   docker:
@@ -31,4 +31,4 @@ jobs:
         with:
           context: ./server
           push: true
-          tags: sofiane1/quete1902:latest
+          tags: shaqteam/taskmanager-server:latest
