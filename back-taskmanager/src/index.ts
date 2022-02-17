@@ -7,7 +7,7 @@ async function start() {
   try {
     // eslint-disable-next-line no-console
     console.log('awaiting for database connection');
-    await createConnection('mongodb://127.0.0.1:27017/task_manager');
+    await createConnection('mongodb://mongodb:27017/task_manager');
     // eslint-disable-next-line no-console
     console.log('connected to database');
     const server = await createServer();

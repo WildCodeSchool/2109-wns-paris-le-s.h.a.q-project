@@ -1,0 +1,15 @@
+name: jest-ci
+
+on: 
+  push:
+    branches-ignore: 
+      - "main"
+
+jobs:
+  test-front:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Go to front-taskmanager and run tests
+        run: cd front-taskmanager && yarn && yarn test

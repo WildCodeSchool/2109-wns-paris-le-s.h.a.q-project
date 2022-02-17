@@ -1,2 +1,4 @@
-front-taskmanager/yarn.lock
+node_modules
+data
 .DS_Store
+coverage
