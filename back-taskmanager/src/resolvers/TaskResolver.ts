@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import { Resolver, Query, Mutation, Arg } from 'type-graphql';
 import CreateTaskInput from '../entity/CreateTaskInput';
+import UpdateTaskInput from '../entity/UpdateTaskInput';
 import Task from '../entity/Task';
 import TaskModels from '../models/TaskModels';
 
@@ -21,21 +22,46 @@ class TaskResolver {
     return newTask;
   }
 
-  /* @Mutation(() => Book)
-async updateBook(@Arg("id") id: string, @Arg("data") data: UpdateBookInput) {
-  const book = await Book.findOne({ where: { id } });
-  if (!book) throw new Error("Book not found!");
-  Object.assign(book, data);
-  await book.save();
-  return book;
-} */
+  @Query(() => Task)
+  findOneTask(@Arg('id') id: string) {
+    return TaskModels.findOne({ id }).exec();
+  }
 
-  /* @Mutation(() => Boolean)
-async deleteBook(@Arg("id") id: string) {
-  const book = await Book.findOne({ where: { id } });
-  if (!book) throw new Error("Book not found!");
-  await book.remove();
-  return true;
-} */
+  // Search Field
+  @Query(() => [Task])
+  async findTaskByKeyword(@Arg('searchField') SearchTaskInput: string) {
+    const taskList = await TaskModels.find({
+      $or: [
+        { subject: SearchTaskInput },
+        { description: SearchTaskInput },
+        { project: SearchTaskInput },
+        { status: SearchTaskInput },
+        { assignee: SearchTaskInput },
+      ],
+    }).exec();
+    if (!TaskResolver) throw new Error('No result for your search!');
+    return taskList;
+  }
+
+  @Mutation(() => Task)
+  async updateTask(@Arg('id') id: string, @Arg('data') data: UpdateTaskInput) {
+    const task = await TaskModels.findOne({ id }).exec();
+    if (!TaskResolver) throw new Error('Task not found!');
+    if (task !== null && task !== undefined) {
+      Object.assign(task, data);
+      await task.save();
+    }
+    return task;
+  }
+
+  @Mutation(() => Boolean)
+  async deleteTask(@Arg('id') id: string) {
+    const task = await TaskModels.findOne({ id }).exec();
+    if (!TaskResolver) throw new Error('Task not found!');
+    if (task !== null && task !== undefined) {
+      await task.remove();
+    }
+    return true;
+  }
 }
 export default TaskResolver;
