@@ -27,15 +27,21 @@ class TaskResolver {
     return TaskModels.findOne({ id }).exec();
   }
 
-  // serach
-  /*   @Query(() => Task)
+  // Search Field
+  @Query(() => [Task])
   async findTaskByKeyword(@Arg('searchField') SearchTaskInput: string) {
     const taskList = await TaskModels.find({
-      where: { subject: { SearchTaskInput } },
+      $or: [
+        { subject: SearchTaskInput },
+        { description: SearchTaskInput },
+        { project: SearchTaskInput },
+        { status: SearchTaskInput },
+        { assignee: SearchTaskInput },
+      ],
     }).exec();
     if (!TaskResolver) throw new Error('No result for your search!');
     return taskList;
-  } */
+  }
 
   @Mutation(() => Task)
   async updateTask(@Arg('id') id: string, @Arg('data') data: UpdateTaskInput) {
