@@ -17,8 +17,10 @@ interface ITaskInput {
 }
 
 const styled = {
-  mx: 4,
-  my: 2,
+  input: {
+    mx: 4,
+    my: 2,
+  },
 };
 
 const TaskInput = ({ refetch }: ITaskInput) => {
@@ -50,7 +52,7 @@ const TaskInput = ({ refetch }: ITaskInput) => {
                 id="subject"
                 label="Subject"
                 type="text"
-                sx={styled}
+                sx={styled.input}
               />
             )}
           />
@@ -64,7 +66,7 @@ const TaskInput = ({ refetch }: ITaskInput) => {
                 id="project"
                 label="Project"
                 type="text"
-                sx={styled}
+                sx={styled.input}
               />
             )}
           />
@@ -78,7 +80,7 @@ const TaskInput = ({ refetch }: ITaskInput) => {
                 id="status"
                 label="Status"
                 type="text"
-                sx={styled}
+                sx={styled.input}
               />
             )}
           />
@@ -92,7 +94,7 @@ const TaskInput = ({ refetch }: ITaskInput) => {
                 id="assignee"
                 label="Assignee"
                 type="text"
-                sx={styled}
+                sx={styled.input}
               />
             )}
           />
@@ -106,7 +108,7 @@ const TaskInput = ({ refetch }: ITaskInput) => {
                 id="dueDate"
                 label="Due Date"
                 type="text"
-                sx={styled}
+                sx={styled.input}
               />
             )}
           />
@@ -120,7 +122,7 @@ const TaskInput = ({ refetch }: ITaskInput) => {
                 id="description"
                 label="Description"
                 type="text"
-                sx={styled}
+                sx={styled.input}
               />
             )}
           />
