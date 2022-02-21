@@ -1,17 +1,5 @@
 import mongoose from 'mongoose';
 
-// const TaskSchema = new Schema({
-//   subject: String,
-//   project: String,
-//   description: String,
-//   assignee: String,
-//   dueDate: String,
-//   status: String,
-// });
-// const taskModel = model('task', TaskSchema);
-
-// export default taskModel;
-
 interface TaskData {
   id: string;
   subject: string;

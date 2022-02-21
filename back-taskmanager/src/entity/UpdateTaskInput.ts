@@ -1,22 +1,22 @@
 import { InputType, Field } from 'type-graphql';
 
 @InputType()
-export default class CreateTaskInput {
+export default class UpdateTaskInput {
   @Field(() => String)
-  subject!: string;
+  subject?: string;
 
   @Field({ nullable: true })
   description?: string;
 
   @Field(() => String)
-  project!: string;
+  project?: string;
 
   @Field(() => String)
-  status!: string;
+  status?: string;
 
   @Field(() => String)
-  assignee!: string;
+  assignee?: string;
 
-  @Field(() => Date)
-  dueDate!: Date;
+  @Field(() => String)
+  dueDate?: string;
 }
