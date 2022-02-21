@@ -1,12 +1,11 @@
 import * as React from 'react';
-import TaskInput from './components/taskInput/TaskInput';
-import TaskTable from './components/taskTable/TaskTable';
+import Task from './components/Task';
+import TaskTable from './components/Task/taskTable/TaskTable';
 import './App.css';
 
 const App = () => (
   <div className="App">
-    <TaskTable />
-    <TaskInput />
+    <Task />
   </div>
 );
 

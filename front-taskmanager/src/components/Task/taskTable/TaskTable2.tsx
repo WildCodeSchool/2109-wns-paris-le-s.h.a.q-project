@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useQuery, gql } from '@apollo/client';
-import ITaskData from '../../interfaces/ITaskData';
+import ITaskData from '../../../interfaces/ITaskData';
 
 export const GET_TASK = gql`
   query allTasks {
