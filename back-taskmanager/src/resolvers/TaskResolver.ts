@@ -30,13 +30,14 @@ class TaskResolver {
   // Search Field
   @Query(() => [Task])
   async findTaskByKeyword(@Arg('searchField') SearchTaskInput: string) {
+    const regex = new RegExp(`^${SearchTaskInput}$`, 'i');
     const taskList = await TaskModels.find({
       $or: [
-        { subject: SearchTaskInput },
-        { description: SearchTaskInput },
-        { project: SearchTaskInput },
-        { status: SearchTaskInput },
-        { assignee: SearchTaskInput },
+        { subject: regex },
+        { description: regex },
+        { project: regex },
+        { status: regex },
+        { assignee: regex },
       ],
     }).exec();
     if (!TaskResolver) throw new Error('No result for your search!');
@@ -55,7 +56,7 @@ class TaskResolver {
   }
 
   @Mutation(() => Boolean)
-  async deleteTask(@Arg('id') _id :string) {
+  async deleteTask(@Arg('id') _id: string) {
     const task = await TaskModels.findOne({ _id }).exec();
     if (!TaskResolver) throw new Error('Task not found!');
     if (task !== null && task !== undefined) {

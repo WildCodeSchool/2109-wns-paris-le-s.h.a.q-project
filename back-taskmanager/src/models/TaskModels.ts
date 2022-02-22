@@ -1,7 +1,9 @@
 import mongoose from 'mongoose';
+import User from '../entity/User';
 
 interface TaskData {
   id: string;
+  userId: User;
   subject: string;
   project: string;
   description: string;
