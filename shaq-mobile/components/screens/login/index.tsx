@@ -1,13 +1,14 @@
 import React from "react";
 import { Text, TextInput, View } from "../../Themed";
 import { Pressable, StyleSheet } from "react-native";
-import navigation from "../../../navigation";
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const [username, onChangeUsername] = React.useState("Username");
   const [password, onChangePassword] = React.useState("Password");
-  const navigateToPageTwo = () => {
-    navigation.navigate("TabTwo");
+  const navigateToPage = () => {
+    navigation.navigate("Tasks", {
+      screen: "TabOne",
+    });
   };
   return (
     <View style={styles.container}>
@@ -27,7 +28,7 @@ const Login = () => {
         onChangeText={onChangePassword}
         value={password}
       />
-      <Pressable style={styles.button} onPress={() => navigateToPageTwo()}>
+      <Pressable style={styles.button} onPress={() => navigateToPage()}>
         <Text style={styles.text}>Login</Text>
       </Pressable>
     </View>
