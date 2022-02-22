@@ -23,8 +23,8 @@ class TaskResolver {
   }
 
   @Query(() => Task)
-  findOneTask(@Arg('id') id: string) {
-    return TaskModels.findOne({ id }).exec();
+  findOneTask(@Arg('id') _id: string) {
+    return TaskModels.findOne({ _id }).exec();
   }
 
   // Search Field
@@ -44,8 +44,8 @@ class TaskResolver {
   }
 
   @Mutation(() => Task)
-  async updateTask(@Arg('id') id: string, @Arg('data') data: UpdateTaskInput) {
-    const task = await TaskModels.findOne({ id }).exec();
+  async updateTask(@Arg('id') _id: string, @Arg('data') data: UpdateTaskInput) {
+    const task = await TaskModels.findOne({ _id }).exec();
     if (!TaskResolver) throw new Error('Task not found!');
     if (task !== null && task !== undefined) {
       Object.assign(task, data);
@@ -55,8 +55,8 @@ class TaskResolver {
   }
 
   @Mutation(() => Boolean)
-  async deleteTask(@Arg('id') id: string) {
-    const task = await TaskModels.findOne({ id }).exec();
+  async deleteTask(@Arg('id') _id :string) {
+    const task = await TaskModels.findOne({ _id }).exec();
     if (!TaskResolver) throw new Error('Task not found!');
     if (task !== null && task !== undefined) {
       await task.remove();
