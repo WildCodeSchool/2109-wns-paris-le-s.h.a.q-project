@@ -1,8 +1,8 @@
 /* eslint-disable class-methods-use-this */
 import { Resolver, Query, Mutation, Arg } from 'type-graphql';
-import CreateCommentInput from '../entity/CreateCommentInput';
+import CreateCommentInput from '../entity/inputs/CreateCommentInput';
 import CommentModels from '../models/CommentModels';
-import Comment from '../entity/Comment';
+import Comment from '../entity/entities/Comment';
 
 @Resolver(Comment)
 class CommentResolver {
