@@ -2,14 +2,14 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import { GraphQLError } from 'graphql/error/GraphQLError';
-import TaskTable, { GET_TASK } from './TaskTable';
-import ITaskData from '../../../interfaces/ITaskData';
+import { TaskTable } from 'components/pages/task';
+import ITaskData from '../../../../../interfaces/task/ITaskData';
 
 describe('fetch all task in TaskTable', () => {
   it('verify if its loading', () => {
     render(
       <MockedProvider mocks={[]} addTypename={false}>
-        <TaskTable />
+        <TaskTable data={undefined} refetch={undefined} />
       </MockedProvider>
     );
     expect(screen.queryByText(/Loading/i)).toBeInTheDocument();

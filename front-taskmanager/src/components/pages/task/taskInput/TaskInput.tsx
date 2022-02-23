@@ -2,19 +2,9 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { TextField, Button, Grid } from '@mui/material';
 import { useMutation } from '@apollo/client';
-import CreateTaskMutation from '../../../graphql/task/CreateTaskMutation';
-
-interface ICreateTask {
-  subject: string;
-  project: string;
-  assignee: string;
-  description: string;
-  dueDate: string;
-  status: string;
-}
-interface ITaskInput {
-  refetch: () => void;
-}
+import CreateTaskMutation from 'graphql/task/CreateTaskMutation';
+import { Subject } from '@material-ui/icons';
+import { ICreateTask, ITaskInput } from 'interfaces';
 
 const styled = {
   input: {
@@ -26,15 +16,16 @@ const styled = {
 const TaskInput = ({ refetch }: ITaskInput) => {
   const [addTask, { data, loading, error }] = useMutation(CreateTaskMutation);
 
-  const { control, handleSubmit } = useForm<ICreateTask>({
+  const { control, handleSubmit, reset } = useForm<ICreateTask>({
     mode: 'onChange',
   });
 
   if (loading) return 'Submitting...';
   if (error) return `Submission error! ${error.message}`;
 
-  const submitForm = (input: ICreateTask) => {
-    addTask({ variables: { input: input } });
+  const submitForm = async (input: ICreateTask) => {
+    reset();
+    await addTask({ variables: { input: input } });
     refetch();
   };
 
@@ -112,7 +103,7 @@ const TaskInput = ({ refetch }: ITaskInput) => {
               />
             )}
           />
-          <Controller
+          {/* <Controller
             control={control}
             name="description"
             defaultValue=""
@@ -125,7 +116,7 @@ const TaskInput = ({ refetch }: ITaskInput) => {
                 sx={styled.input}
               />
             )}
-          />
+          /> */}
         </Grid>
         {/* <Grid item xs={12}>
             

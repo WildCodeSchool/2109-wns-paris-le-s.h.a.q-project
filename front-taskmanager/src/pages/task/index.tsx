@@ -1,8 +1,8 @@
 import React from 'react';
-import TaskInput from './taskInput/TaskInput';
-import TaskTable from './taskTable/TaskTable';
+import TaskInput from 'components/pages/task/taskInput/TaskInput';
+import TaskTable from 'components/pages/task/taskTable';
 import { useQuery } from '@apollo/client';
-import TasksQuery from '../../graphql/task/TasksQuery';
+import TasksQuery from 'graphql/task/TasksQuery';
 
 const Task = () => {
   const { loading, error, data, refetch } = useQuery(TasksQuery);
@@ -12,7 +12,7 @@ const Task = () => {
 
   return (
     <>
-      <TaskTable data={data.allTasks} />
+      <TaskTable data={data.allTasks} refetch={refetch} />
       <TaskInput refetch={refetch} />
     </>
   );
