@@ -1,10 +1,12 @@
 import mongoose from 'mongoose';
-import User from '../entity/User';
+import { CommentData, CommentSchema } from './CommentModels';
+import { UserData, UserSchema } from './UserModel';
 
-interface TaskData {
+export interface TaskData {
   id: string;
-  userId: User;
+  user: UserData;
   subject: string;
+  comment: CommentData;
   project: string;
   description: string;
   assignee: string;
@@ -13,8 +15,10 @@ interface TaskData {
 }
 
 const { Schema } = mongoose;
-const TaskSchema = new Schema<TaskData>({
+export const TaskSchema = new Schema<TaskData>({
+  user: UserSchema,
   subject: String,
+  comment: CommentSchema,
   project: String,
   description: String,
   assignee: String,

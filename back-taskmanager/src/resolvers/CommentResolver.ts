@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import { Resolver, Query, Mutation, Arg } from 'type-graphql';
-import CreateCommentInput from '../entity/CreateTaskInput';
+import CreateCommentInput from '../entity/CreateCommentInput';
 import CommentModels from '../models/CommentModels';
 import Comment from '../entity/Comment';
 
@@ -14,7 +14,7 @@ class CommentResolver {
 
   @Mutation(() => Comment)
   async createComment(
-    @Arg('input') createCommentInput: CreateCommentInput
+    @Arg('commentInput') createCommentInput: CreateCommentInput
   ): Promise<Comment> {
     const newComment = new CommentModels(createCommentInput);
     await newComment.save();

@@ -7,8 +7,8 @@ export default class Comment {
   @Field(() => ID)
   id!: string;
 
-  @Field(() => String)
-  userId!: User;
+  @Field(() => User)
+  user!: User;
 
   @Field(() => String)
   author!: string;
@@ -16,7 +16,7 @@ export default class Comment {
   @Field(() => String)
   content!: string;
 
-  @Field(() => String)
+  @Field(() => Task)
   task!: Task;
 
   @Field(() => Boolean)

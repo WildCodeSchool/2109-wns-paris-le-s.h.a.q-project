@@ -1,17 +1,21 @@
+/* eslint-disable import/no-cycle */
 import mongoose from 'mongoose';
+import { TaskData, TaskSchema } from './TaskModels';
 
-interface UserData {
+export interface UserData {
   id: string;
   name: string;
   role: string;
+  task: TaskData;
   subscriptionDate: string;
 }
 
 const { Schema } = mongoose;
-const UserSchema = new Schema<UserData>({
+export const UserSchema = new Schema<UserData>({
   id: String,
   name: String,
   role: String,
+  task: TaskSchema,
   subscriptionDate: String,
 });
 

@@ -1,26 +1,25 @@
 import mongoose from 'mongoose';
-import User from '../entity/User';
-import Task from '../entity/Task';
+import { UserData, UserSchema } from './UserModel';
+import { TaskData, TaskSchema } from './TaskModels';
 
-interface PostData {
+export interface CommentData {
   id: string;
-  userId: User;
+  user: UserData;
   author: string;
   content: string;
-  task: Task;
+  task: TaskData;
   isPublished: boolean;
   createdAt: string;
 }
 
 const { Schema } = mongoose;
-const PostSchema = new Schema<PostData>({
-  id: String,
-  userId: String,
+export const CommentSchema = new Schema<CommentData>({
+  user: UserSchema,
   author: String,
   content: String,
-  task: Task,
+  task: TaskSchema,
   isPublished: Boolean,
   createdAt: String,
 });
 
-export default mongoose.model<PostData>('post', PostSchema);
+export default mongoose.model<CommentData>('comment', CommentSchema);

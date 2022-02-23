@@ -1,9 +1,13 @@
 import { ID, ObjectType, Field } from 'type-graphql';
+import User from './User';
 
 @ObjectType()
 export default class Task {
   @Field(() => ID)
   id!: string;
+
+  @Field(() => User)
+  user!: User;
 
   @Field(() => String)
   subject!: string;

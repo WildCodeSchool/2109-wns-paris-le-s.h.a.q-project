@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { ApolloServer } from 'apollo-server';
 import { buildSchema } from 'type-graphql';
+
 import TaskResolver from './resolvers/TaskResolver';
 import CommentResolver from './resolvers/CommentResolver';
 
