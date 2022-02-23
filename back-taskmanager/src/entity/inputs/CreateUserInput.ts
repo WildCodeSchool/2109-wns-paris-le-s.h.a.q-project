@@ -1,10 +1,7 @@
-import { ID, ObjectType, Field } from 'type-graphql';
+import { InputType, Field } from 'type-graphql';
 
-@ObjectType()
-class User {
-  @Field(() => ID)
-  _id!: string;
-
+@InputType()
+export default class CreateUserInput {
   @Field()
   firstName!: string;
 
@@ -23,8 +20,6 @@ class User {
   @Field()
   role!: string;
 
-  @Field()
-  subscriptionDate!: Date;
+  @Field(() => String)
+  subscriptionDate!: string;
 }
-
-export default User;

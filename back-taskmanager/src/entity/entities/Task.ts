@@ -1,6 +1,5 @@
 import { ID, ObjectType, Field } from 'type-graphql';
-import Project from './Project';
-import User from './User';
+import { ObjectId } from "mongoose";
 
 @ObjectType()
 export default class Task {
@@ -13,8 +12,8 @@ export default class Task {
   @Field({ nullable: true })
   description?: string;
 
-  @Field(() => Project)
-  project?: Project;
+  @Field()
+  project?: ObjectId;
 
   @Field()
   status?: string;
@@ -22,8 +21,8 @@ export default class Task {
   @Field()
   priority?: string;
 
-  @Field(() => User)
-  assignee!: User;
+  @Field()
+  assignee!: ObjectId;
 
   @Field()
   initial_time_estimation?: number;

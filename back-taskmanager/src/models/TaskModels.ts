@@ -1,10 +1,10 @@
 import mongoose, { Types } from 'mongoose';
 
-export interface TaskData {
-  id: string;
+interface TaskData {
+  _id: string;
   subject: string;
   description: string;
-  project: string;
+  project: Types.ObjectId;
   status: 'unassigned' | 'in progress' | 'done' | 'to validate' | undefined;
   priority: 'low' | 'medium' | 'urgent' | undefined;
   assignee: Types.ObjectId;
@@ -15,11 +15,16 @@ export interface TaskData {
 }
 
 const { Schema } = mongoose;
-export const TaskSchema = new Schema<TaskData>(
+const TaskSchema = new Schema<TaskData>(
   {
+    _id: mongoose.Types.ObjectId,
     subject: String,
     description: String,
-    project: String,
+    project: {
+      type: Schema.Types.ObjectId,
+      ref: 'Project',
+      required:true, 
+    },
     status: {
       type: String,
       enum: ['unassigned', 'in progress', 'done', 'other', 'to validate'],
@@ -33,7 +38,7 @@ export const TaskSchema = new Schema<TaskData>(
     assignee: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+      required:true, 
     },
     initial_time_estimation: Number,
     advancement: Number,

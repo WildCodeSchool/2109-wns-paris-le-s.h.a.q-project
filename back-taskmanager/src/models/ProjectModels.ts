@@ -1,28 +1,36 @@
 /* eslint-disable import/no-cycle */
-import mongoose from 'mongoose';
-import { UserData, UserSchema } from './UserModel';
+import mongoose, { Types } from 'mongoose';
 
-export interface ProjectData {
-  id: string;
+interface ProjectData {
+  _id: string;
   title: string;
   subject: string;
-  projectOwner: UserData;
-  members: UserData;
+  projectOwner: Types.ObjectId;
+  members: Types.ObjectId;
   estimationTime: number;
   spentTime: number;
   deadline: Date;
 }
 
 const { Schema } = mongoose;
-export const ProjectSchema = new Schema<ProjectData>(
+const ProjectSchema = new Schema<ProjectData>(
   {
+    _id: mongoose.Types.ObjectId,
     title: {
       type: String,
       required: true,
     },
     subject: String,
-    projectOwner: UserSchema,
-    members: UserSchema,
+    projectOwner: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required:true, 
+      },
+    members: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required:true, 
+    },
     estimationTime: Number,
     spentTime: Number,
     deadline: Date,

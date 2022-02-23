@@ -1,8 +1,8 @@
 /* eslint-disable class-methods-use-this */
 import { Resolver, Query, Mutation, Arg } from 'type-graphql';
-import CreateTaskInput from '../entity/CreateTaskInput';
-import UpdateTaskInput from '../entity/UpdateTaskInput';
-import Task from '../entity/Task';
+import CreateTaskInput from '../entity/inputs/CreateTaskInput';
+import UpdateTaskInput from '../entity/inputs/UpdateTaskInput';
+import Task from '../entity/entities/Task';
 import TaskModels from '../models/TaskModels';
 
 @Resolver(Task)
@@ -14,12 +14,14 @@ class TaskResolver {
   }
 
   @Mutation(() => Task)
-  async createTask(
-    @Arg('input') createTaskInput: CreateTaskInput
-  ): Promise<Task> {
-    const newTask = new TaskModels(createTaskInput);
-    await newTask.save();
-    return newTask;
+  async createTask(@Arg('input') createTaskInput: CreateTaskInput) {
+    try {
+      const newTask = new TaskModels(createTaskInput);
+      await newTask.save();
+      return newTask;
+    } catch (err) {
+      return console.log(err);
+    }
   }
 
   @Query(() => Task)
@@ -32,13 +34,7 @@ class TaskResolver {
   async findTaskByKeyword(@Arg('searchField') SearchTaskInput: string) {
     const regex = new RegExp(`^${SearchTaskInput}$`, 'i');
     const taskList = await TaskModels.find({
-      $or: [
-        { subject: regex },
-        { description: regex },
-        { project: regex },
-        { status: regex },
-        { assignee: regex },
-      ],
+      $or: [{ subject: regex }, { description: regex }, { status: regex }],
     }).exec();
     if (!TaskResolver) throw new Error('No result for your search!');
     return taskList;

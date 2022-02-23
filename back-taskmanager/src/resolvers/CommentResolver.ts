@@ -13,12 +13,15 @@ class CommentResolver {
   }
 
   @Mutation(() => Comment)
-  async createComment(
-    @Arg('commentInput') createCommentInput: CreateCommentInput
-  ): Promise<Comment> {
-    const newComment = new CommentModels(createCommentInput);
-    await newComment.save();
-    return newComment;
+  async createComment(@Arg('commentInput') createCommentInput: CreateCommentInput
+  ) {
+    try {
+      const newComment = new CommentModels(createCommentInput);
+      await newComment.save();
+      return newComment;
+    } catch (err) {
+      return console.log('ff', err);
+    }
   }
 }
 export default CommentResolver;

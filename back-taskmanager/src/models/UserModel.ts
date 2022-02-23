@@ -1,8 +1,8 @@
 /* eslint-disable import/no-cycle */
 import mongoose from 'mongoose';
 
-export interface UserData {
-  id: string;
+interface UserData {
+  _id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -13,8 +13,9 @@ export interface UserData {
 }
 
 const { Schema } = mongoose;
-export const UserSchema = new Schema<UserData>(
+const UserSchema = new Schema<UserData>(
   {
+    _id: mongoose.Types.ObjectId,
     firstName: {
       type: String,
       required: true,

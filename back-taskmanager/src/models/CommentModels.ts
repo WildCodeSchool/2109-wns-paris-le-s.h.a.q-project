@@ -1,8 +1,8 @@
 /* eslint-disable import/no-cycle */
 import mongoose, { Types } from 'mongoose';
 
-export interface CommentData {
-  id: string;
+interface CommentData {
+  _id: string;
   author: Types.ObjectId;
   content: string;
   avatar?: string;
@@ -11,8 +11,9 @@ export interface CommentData {
 }
 
 const { Schema } = mongoose;
-export const CommentSchema = new Schema<CommentData>(
+const CommentSchema = new Schema<CommentData>(
   {
+    _id: mongoose.Types.ObjectId,
     author: {
       type: Schema.Types.ObjectId,
       ref: 'User',
