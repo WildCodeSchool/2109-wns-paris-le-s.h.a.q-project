@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import { CommentData, CommentSchema } from './CommentModels';
-import { UserData, UserSchema } from './UserModel';
+import { CommentData } from './CommentModels';
+import { UserData } from './UserModel';
 
 export interface TaskData {
   id: string;
@@ -15,10 +15,10 @@ export interface TaskData {
 }
 
 const { Schema } = mongoose;
-export const TaskSchema = new Schema<TaskData>({
-  user: UserSchema,
+const TaskSchema = new Schema({
+  user: { type: mongoose.Types.ObjectId, ref: 'User' },
   subject: String,
-  comment: CommentSchema,
+  comment: { type: mongoose.Types.ObjectId, ref: 'Comment' },
   project: String,
   description: String,
   assignee: String,

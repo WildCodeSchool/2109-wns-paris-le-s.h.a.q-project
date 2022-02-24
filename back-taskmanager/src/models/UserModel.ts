@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 import mongoose from 'mongoose';
-import { TaskData, TaskSchema } from './TaskModels';
+import { TaskData } from './TaskModels';
 
 export interface UserData {
   id: string;
@@ -11,11 +11,11 @@ export interface UserData {
 }
 
 const { Schema } = mongoose;
-export const UserSchema = new Schema<UserData>({
+export const UserSchema = new Schema({
   id: String,
   name: String,
   role: String,
-  task: TaskSchema,
+  task: { type: mongoose.Types.ObjectId },
   subscriptionDate: String,
 });
 
