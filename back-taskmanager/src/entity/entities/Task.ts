@@ -13,6 +13,9 @@ export default class Task {
 
   @Field(() => ID)
   projectId?: string;
+  
+/*   @Field()
+  projectId?: ObjectId; */
 
   @Field()
   status?: string;

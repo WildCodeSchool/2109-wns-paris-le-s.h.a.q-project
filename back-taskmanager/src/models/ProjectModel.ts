@@ -15,16 +15,16 @@ export interface ProjectData {
 const { Schema } = mongoose;
 const ProjectSchema = new Schema<ProjectData>(
   {
-/*     id: mongoose.Types.ObjectId, */
     title: {
       type: String,
       required: true,
     },
     subject: String,
     projectOwner: String,
-    members: [  
+/*     members: [  
     {  type: mongoose.Types.ObjectId, 
-      ref: "User",} ],
+      ref: "user"} ], */
+    members: [ mongoose.Types.ObjectId],
     estimationTime: Number,
     spentTime: Number,
     deadline: String,
