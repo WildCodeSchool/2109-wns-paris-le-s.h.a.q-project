@@ -4,28 +4,28 @@ import User from './User';
 @ObjectType()
 class Project {
   @Field(() => ID)
-  _id!: string;
+  id!: string;
 
   @Field()
-  title!: string;
+  title?: string;
 
   @Field()
-  subject!: string;
+  subject?: string;
 
-  @Field(() => User)
-  projectOwner!: User;
+  @Field()
+  projectOwner?: string;
 
   @Field(() => [User])
-  members!: User[];
+  members?: User[];
 
   @Field()
-  estimationTime!: number;
+  estimationTime?: number;
 
   @Field()
-  spentTime!: number;
+  spentTime?: number;
 
   @Field()
-  deadline!: Date;
+  deadline?: string;
 }
 
 export default Project;

@@ -1,29 +1,29 @@
 import mongoose, { Types } from 'mongoose';
 
-interface TaskData {
-  _id: string;
-  subject: string;
-  description: string;
-  project: Types.ObjectId;
-  status: 'unassigned' | 'in progress' | 'done' | 'to validate' | undefined;
-  priority: 'low' | 'medium' | 'urgent' | undefined;
-  assignee: Types.ObjectId;
+export interface TaskData {
+  id: string;
+  subject?: string;
+  description?: string;
+  projectId?: Types.ObjectId;
+  status?: 'unassigned' | 'in progress' | 'done' | 'to validate' | undefined;
+  priority?: 'low' | 'medium' | 'urgent' | undefined;
+  assigneeId?: Types.ObjectId;
   initial_time_estimation?: number;
+  initial_time_spent?: number;
   advancement?: number;
-  deadline: Date;
+  deadline?: string;
   document_upload?: string;
 }
 
 const { Schema } = mongoose;
 const TaskSchema = new Schema<TaskData>(
   {
-    _id: mongoose.Types.ObjectId,
+/*     id: mongoose.Types.ObjectId, */
     subject: String,
     description: String,
-    project: {
+    projectId: {
       type: Schema.Types.ObjectId,
-      ref: 'Project',
-      required:true, 
+      ref: 'project',
     },
     status: {
       type: String,
@@ -35,15 +35,11 @@ const TaskSchema = new Schema<TaskData>(
       enum: ['low', 'medium', 'done', 'urgent'],
       default: 'low',
     },
-    assignee: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required:true, 
-    },
     initial_time_estimation: Number,
+    initial_time_spent: Number,
     advancement: Number,
-    deadline: Date,
-    document_upload: String,
+    deadline: String,
+/*     document_upload: String, */
   },
   {
     timestamps: {

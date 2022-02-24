@@ -1,19 +1,18 @@
 import { ID, ObjectType, Field } from 'type-graphql';
-import { ObjectId } from "mongoose";
 
 @ObjectType()
 export default class Task {
   @Field(() => ID)
-  _id!: string;
+  id!: string;
 
   @Field()
   subject?: string;
 
-  @Field({ nullable: true })
+  @Field()
   description?: string;
 
-  @Field()
-  project?: ObjectId;
+  @Field(() => ID)
+  projectId?: string;
 
   @Field()
   status?: string;
@@ -21,8 +20,8 @@ export default class Task {
   @Field()
   priority?: string;
 
-  @Field()
-  assignee!: ObjectId;
+/*   @Field(() => ID)
+  assigneeId?: string; */
 
   @Field()
   initial_time_estimation?: number;
@@ -34,8 +33,8 @@ export default class Task {
   advancement?: number;
 
   @Field()
-  deadline!: Date;
+  deadline?: string;
 
-  @Field()
-  document_upload?: String;
+/*   @Field()
+  document_upload?: String; */
 }

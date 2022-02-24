@@ -1,21 +1,20 @@
 /* eslint-disable import/no-cycle */
 import mongoose from 'mongoose';
 
-interface UserData {
-  _id: string;
+export interface UserData {
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
   password: string;
   photo?: string;
   role: 'admin' | 'developer' | 'project manager' | 'other' | undefined;
-  subscriptionDate: Date;
 }
 
 const { Schema } = mongoose;
 const UserSchema = new Schema<UserData>(
   {
-    _id: mongoose.Types.ObjectId,
+/*     id: mongoose.Types.ObjectId, */
     firstName: {
       type: String,
       required: true,
@@ -38,7 +37,6 @@ const UserSchema = new Schema<UserData>(
       enum: ['admin', 'developer', 'project manager', 'other'],
       default: 'draft',
     },
-    subscriptionDate: String,
   },
   {
     timestamps: {

@@ -1,18 +1,18 @@
 import { InputType, Field } from 'type-graphql';
-import { ObjectId } from 'mongoose';
-
 
 @InputType()
 export default class CreateTaskInput {
+/*   @Field(() => ID)
+  _id!: string; */
 
   @Field()
   subject?: string;
 
-  @Field({ nullable: true })
+  @Field()
   description?: string;
 
-  @Field()
-  project!: ObjectId;
+/*   @Field(() => ID)
+  projectId?: string; */
 
   @Field()
   status?: string;
@@ -20,8 +20,8 @@ export default class CreateTaskInput {
   @Field()
   priority?: string;
 
-  @Field()
-  assignee!: ObjectId;
+/*   @Field(() => ID)
+  assigneeId?: string; */
 
   @Field()
   initial_time_estimation?: number;
@@ -33,8 +33,8 @@ export default class CreateTaskInput {
   advancement?: number;
 
   @Field()
-  deadline!: Date;
+  deadline?: string;
 
-  @Field()
-  document_upload?: String;
+/*   @Field()
+  document_upload?: String; */
 }

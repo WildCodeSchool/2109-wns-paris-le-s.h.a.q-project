@@ -12,14 +12,11 @@ export default class CreateUserInput {
   email!: string;
 
   @Field()
-  hash!: string;
+  password!: string;
 
   @Field()
   photo?: string;
 
   @Field()
   role!: string;
-
-  @Field(() => String)
-  subscriptionDate!: string;
 }

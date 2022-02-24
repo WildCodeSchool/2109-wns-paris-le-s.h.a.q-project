@@ -1,39 +1,33 @@
 /* eslint-disable import/no-cycle */
 import mongoose, { Types } from 'mongoose';
 
-interface ProjectData {
-  _id: string;
+export interface ProjectData {
+  id: string;
   title: string;
   subject: string;
-  projectOwner: Types.ObjectId;
+  projectOwner?: string;
   members: Types.ObjectId;
   estimationTime: number;
   spentTime: number;
-  deadline: Date;
+  deadline: string;
 }
 
 const { Schema } = mongoose;
 const ProjectSchema = new Schema<ProjectData>(
   {
-    _id: mongoose.Types.ObjectId,
+/*     id: mongoose.Types.ObjectId, */
     title: {
       type: String,
       required: true,
     },
     subject: String,
-    projectOwner: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required:true, 
-      },
-    members: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required:true, 
-    },
+    projectOwner: String,
+    members: [  
+    {  type: mongoose.Types.ObjectId, 
+      ref: "User",} ],
     estimationTime: Number,
     spentTime: Number,
-    deadline: Date,
+    deadline: String,
   },
   {
     timestamps: {

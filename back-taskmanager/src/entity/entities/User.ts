@@ -3,7 +3,7 @@ import { ID, ObjectType, Field } from 'type-graphql';
 @ObjectType()
 class User {
   @Field(() => ID)
-  _id!: string;
+  id!: string;
 
   @Field()
   firstName!: string;
@@ -15,16 +15,13 @@ class User {
   email!: string;
 
   @Field()
-  hash!: string;
+  password!: string;
 
   @Field()
   photo?: string;
 
   @Field()
   role!: string;
-
-  @Field()
-  subscriptionDate!: Date;
 }
 
 export default User;
