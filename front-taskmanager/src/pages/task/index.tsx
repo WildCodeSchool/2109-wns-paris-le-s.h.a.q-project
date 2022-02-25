@@ -1,5 +1,4 @@
 import React from 'react';
-import TaskInput from 'components/pages/task/taskForm/TaskInput';
 import TaskTable from 'components/pages/task/taskTable';
 import { useQuery } from '@apollo/client';
 import TasksQuery from 'graphql/task/TasksQuery';

@@ -8,8 +8,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import AddTask from '@mui/icons-material/AddTask';
 import Clear from '@mui/icons-material/Clear';
-import TaskInput from './TaskInput';
-import { ITaskInput } from 'interfaces';
+import AddTaskForm from './AddTaskForm';
+import { IAddTaskForm } from 'interfaces';
 
 import { Dispatch, SetStateAction } from 'react';
 
@@ -23,7 +23,7 @@ const AlertDialogCreateTask = ({
   refetch,
   openAddTask,
   handleCloseAddTask,
-}: ITaskInput) => {
+}: IAddTaskForm) => {
   return (
     <div>
       <Dialog open={openAddTask} onClose={handleCloseAddTask}>
@@ -38,7 +38,7 @@ const AlertDialogCreateTask = ({
           Ajouter une tâche
         </DialogTitle>
         <DialogContent>
-          <TaskInput
+          <AddTaskForm
             refetch={refetch}
             handleCloseAddTask={handleCloseAddTask}
           />
@@ -48,6 +48,7 @@ const AlertDialogCreateTask = ({
             onClick={handleCloseAddTask}
             startIcon={<Clear />}
             variant="outlined"
+            color="error"
           >
             Annuler
           </Button>
@@ -56,6 +57,7 @@ const AlertDialogCreateTask = ({
             form="test"
             startIcon={<AddTask />}
             variant="outlined"
+            color="success"
           >
             Ajouter
           </Button>

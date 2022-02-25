@@ -1,7 +1,7 @@
-interface ITaskInput {
+interface IAddTaskForm {
   refetch: () => void;
   openAddTask: any;
   handleCloseAddTask: any;
 }
 
-export default ITaskInput;
+export default IAddTaskForm;

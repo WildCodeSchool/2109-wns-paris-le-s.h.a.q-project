@@ -11,6 +11,8 @@ import { IEnhancedTableToolbarProps } from 'interfaces';
 import DeleteTaskMutation from 'graphql/task/DeleteTaskMutation';
 
 import AlertDialogCreateTask from 'components/pages/task/taskForm/AlertDialogCreateTask';
+import { Grid } from '@material-ui/core';
+import { Alert } from '@mui/material';
 
 const EnhancedTableToolbar = (props: IEnhancedTableToolbarProps) => {
   const { numSelected, elementId, setSelected, refetch } = props;
@@ -60,74 +62,69 @@ const EnhancedTableToolbar = (props: IEnhancedTableToolbarProps) => {
 
   return (
     <>
-      <Toolbar
-        sx={{
-          pl: { sm: 2 },
-          pr: { xs: 1, sm: 1 },
-          py: 2,
-          // ...(numSelected > 0 && {
-          //   bgcolor: (theme) =>
-          //     alpha(
-          //       theme.palette.secondary.main,
-          //       theme.palette.action.activatedOpacity
-          //     ),
-          // }),
-          // justifyContent: 'space-around',
-        }}
-      >
-        <div style={{ position: 'absolute' }}>
-          {numSelected > 0 ? (
-            <Tooltip title="Supprimer">
-              {/* <IconButton onClick={handleClickOpenDeleteTask}>
-              <DeleteIcon />
-            </IconButton> */}
-              <Button
-                variant="outlined"
-                startIcon={<DeleteIcon />}
-                onClick={handleClickOpenDeleteTask}
-              >
-                SUPPRIMER
-              </Button>
-            </Tooltip>
-          ) : (
-            <Tooltip title="Ajouter une tâche">
-              <>
-                <ButtonAdd
-                  titleButton="Ajouter tâche"
-                  onClick={handleClickOpenAddTask}
-                />
-              </>
-            </Tooltip>
-          )}
-        </div>
+      <header>
+        <Grid container>
+          <Grid item style={{ width: '100%' }}>
+            <Typography
+              sx={{
+                textTransform: 'uppercase',
+              }}
+              variant="h6"
+              fontWeight="bold"
+              id="tableTitle"
+              component="h1"
+            >
+              Liste des tâches
+            </Typography>
+          </Grid>
 
-        <Typography
-          sx={{
-            textTransform: 'uppercase',
-            flex: 1,
-          }}
-          variant="h6"
-          id="tableTitle"
-          component="h1"
-        >
-          Liste des tâches
-        </Typography>
+          <Grid item>
+            <Toolbar
+              sx={{
+                pl: { sm: 2 },
+                pr: { xs: 1, sm: 1 },
+                py: 2,
+              }}
+            >
+              {numSelected > 0 ? (
+                <Tooltip title="Supprimer">
+                  <Button
+                    variant="outlined"
+                    startIcon={<DeleteIcon />}
+                    onClick={handleClickOpenDeleteTask}
+                  >
+                    SUPPRIMER
+                  </Button>
+                </Tooltip>
+              ) : (
+                <Tooltip title="Ajouter une tâche">
+                  <>
+                    <ButtonAdd
+                      titleButton="Ajouter tâche"
+                      onClick={handleClickOpenAddTask}
+                    />
+                  </>
+                </Tooltip>
+              )}
 
-        {numSelected > 0 ? (
-          <Typography
-            color="inherit"
-            variant="subtitle1"
-            component="div"
-            sx={{
-              textTransform: 'uppercase',
-              justifySelf: 'right',
-              color: 'red',
-            }}
-          >
-            {numSelected} selected
-          </Typography>
-        ) : null}
-      </Toolbar>
+              {numSelected > 0 ? (
+                <Typography
+                  color="inherit"
+                  variant="subtitle1"
+                  component="div"
+                  sx={{
+                    textTransform: 'uppercase',
+                    paddingLeft: '30px',
+                    color: 'red',
+                  }}
+                >
+                  {numSelected} selected
+                </Typography>
+              ) : null}
+            </Toolbar>
+          </Grid>
+        </Grid>
+      </header>
       <AlertDialogCreateTask
         refetch={refetch}
         openAddTask={openAddTask}
@@ -138,6 +135,11 @@ const EnhancedTableToolbar = (props: IEnhancedTableToolbarProps) => {
         handleCloseDeleteTask={handleCloseDeleteTask}
         setConfirmationDeleteTask={setConfirmationDeleteTask}
       />
+      {confirmationDeleteTask ? (
+        <Alert severity="success" color="info">
+          This is a success alert — check it out!
+        </Alert>
+      ) : null}
     </>
   );
 };

@@ -1,11 +1,10 @@
-import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { TextField, Button, Grid } from '@mui/material';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Alert, Grid } from '@mui/material';
 import { useMutation } from '@apollo/client';
 import CreateTaskMutation from 'graphql/task/CreateTaskMutation';
-import { Subject } from '@material-ui/icons';
-import { ICreateTask, ITaskInput } from 'interfaces';
-import ButtonAdd from 'components/shared/ButtonAdd';
+import { ICreateTask, IAddTaskForm } from 'interfaces';
+import TaskInput from './TaskInput';
 
 const styled = {
   input: {
@@ -14,7 +13,7 @@ const styled = {
   },
 };
 
-const TaskInput = ({ refetch, handleCloseAddTask }: ITaskInput) => {
+const AddTaskForm = ({ refetch, handleCloseAddTask }: IAddTaskForm) => {
   const { control, handleSubmit, reset } = useForm<ICreateTask>({
     mode: 'onChange',
   });
@@ -23,8 +22,8 @@ const TaskInput = ({ refetch, handleCloseAddTask }: ITaskInput) => {
     addTask,
     { data: dataOnAdd, loading: loadingOnAdd, error: errorOnAdd },
   ] = useMutation(CreateTaskMutation);
-  if (loadingOnAdd) return 'Submitting...';
-  if (errorOnAdd) return `Submission error! ${errorOnAdd.message}`;
+  if (loadingOnAdd) return 'Soummission du formulaire...';
+  if (errorOnAdd) return `Erreur dans le formulaire! ${errorOnAdd.message}`;
 
   const submitForm = async (input: ICreateTask) => {
     reset();
@@ -33,7 +32,66 @@ const TaskInput = ({ refetch, handleCloseAddTask }: ITaskInput) => {
     handleCloseAddTask();
   };
 
-  return <form onSubmit={handleSubmit(submitForm)}></form>;
+  return (
+    <form id="test" onSubmit={handleSubmit(submitForm)}>
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        direction="row"
+      >
+        <Grid item justifyContent="space-around">
+          <TaskInput
+            control={control}
+            name="subject"
+            label="Subject"
+            type="text"
+            styled={styled.input}
+          />
+          <TaskInput
+            control={control}
+            name="project"
+            label="Project"
+            type="text"
+            styled={styled.input}
+          />
+        </Grid>
+
+        <Grid item justifyContent="space-around">
+          <TaskInput
+            control={control}
+            name="status"
+            label="Status"
+            type="text"
+            styled={{ width: '31.3%', my: 1 }}
+          />
+          <TaskInput
+            control={control}
+            name="assignee"
+            label="Assignee"
+            type="text"
+            styled={{ width: '31.3%', mx: 2, my: 1 }}
+          />
+          <TaskInput
+            control={control}
+            name="dueDate"
+            label=""
+            type="date"
+            styled={{ width: '31.3%', my: 1 }}
+          />
+        </Grid>
+        <Grid item justifyContent="center" width="100%">
+          <TaskInput
+            control={control}
+            name="description"
+            label="Description"
+            type="text"
+            styled={{ my: 1, width: '100%' }}
+          />
+        </Grid>
+      </Grid>
+    </form>
+  );
 };
 
-export default TaskInput;
+export default AddTaskForm;

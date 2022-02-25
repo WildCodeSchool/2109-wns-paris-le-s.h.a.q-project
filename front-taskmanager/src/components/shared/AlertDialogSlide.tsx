@@ -39,11 +39,12 @@ const AlertDialogSlide = ({
           Etes vous sûr de vouloir supprimer ?
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ justifyContent: 'center' }}>
         <Button
           onClick={() => setConfirmationDeleteTask(false)}
           startIcon={<Clear />}
           variant="outlined"
+          color="error"
         >
           Annuler
         </Button>
@@ -51,6 +52,7 @@ const AlertDialogSlide = ({
           onClick={() => setConfirmationDeleteTask(true)}
           startIcon={<AddTask />}
           variant="outlined"
+          color="success"
         >
           Confirmer
         </Button>
