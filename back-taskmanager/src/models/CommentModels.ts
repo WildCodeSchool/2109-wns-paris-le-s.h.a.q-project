@@ -1,16 +1,16 @@
 import mongoose from 'mongoose';
-import { UserData } from './UserModel';
-import { TaskData } from './TaskModels';
+// import { UserData } from './UserModel';
+// import { TaskData } from './TaskModels';
 
-export interface CommentData {
-  id: string;
-  user: UserData;
-  author: string;
-  content: string;
-  task: TaskData;
-  isPublished: boolean;
-  createdAt: string;
-}
+// export interface CommentData {
+//   id: string;
+//   user: UserData;
+//   author: string;
+//   content: string;
+//   task: TaskData;
+//   isPublished: boolean;
+//   createdAt: string;
+// }
 
 const { Schema } = mongoose;
 export const CommentSchema = new Schema({
@@ -22,4 +22,4 @@ export const CommentSchema = new Schema({
   createdAt: String,
 });
 
-export default mongoose.model<CommentData>('comment', CommentSchema);
+export default mongoose.model('comment', CommentSchema);

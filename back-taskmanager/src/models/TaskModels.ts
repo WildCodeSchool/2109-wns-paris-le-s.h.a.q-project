@@ -1,18 +1,18 @@
 import mongoose from 'mongoose';
-import { CommentData } from './CommentModels';
-import { UserData } from './UserModel';
+// import { CommentData } from './CommentModels';
+// import { UserData } from './UserModel';
 
-export interface TaskData {
-  id: string;
-  user: UserData;
-  subject: string;
-  comment: CommentData;
-  project: string;
-  description: string;
-  assignee: string;
-  dueDate: string;
-  status: string;
-}
+// export interface TaskData {
+//   id: string;
+//   user: UserData;
+//   subject: string;
+//   comment: CommentData;
+//   project: string;
+//   description: string;
+//   assignee: string;
+//   dueDate: string;
+//   status: string;
+// }
 
 const { Schema } = mongoose;
 const TaskSchema = new Schema({
@@ -26,4 +26,4 @@ const TaskSchema = new Schema({
   status: String,
 });
 
-export default mongoose.model<TaskData>('task', TaskSchema);
+export default mongoose.model('task', TaskSchema);

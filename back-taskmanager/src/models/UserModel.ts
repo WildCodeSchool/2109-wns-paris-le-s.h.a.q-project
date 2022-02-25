@@ -1,14 +1,14 @@
 /* eslint-disable import/no-cycle */
 import mongoose from 'mongoose';
-import { TaskData } from './TaskModels';
+// import { TaskData } from './TaskModels';
 
-export interface UserData {
-  id: string;
-  name: string;
-  role: string;
-  task: TaskData;
-  subscriptionDate: string;
-}
+// export interface UserData {
+//   id: string;
+//   name: string;
+//   role: string;
+//   task: TaskData;
+//   subscriptionDate: string;
+// }
 
 const { Schema } = mongoose;
 export const UserSchema = new Schema({
@@ -19,4 +19,4 @@ export const UserSchema = new Schema({
   subscriptionDate: String,
 });
 
-export default mongoose.model<UserData>('user', UserSchema);
+export default mongoose.model('user', UserSchema);
