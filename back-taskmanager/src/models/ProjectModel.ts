@@ -1,30 +1,29 @@
 /* eslint-disable import/no-cycle */
-import mongoose, { Types } from 'mongoose';
+import mongoose from 'mongoose';
 
-export interface ProjectData {
-  id: string;
-  title: string;
-  subject: string;
-  projectOwner?: string;
-  members: Types.ObjectId;
-  estimationTime: number;
-  spentTime: number;
-  deadline: string;
-}
+// export interface ProjectData {
+//   id: string;
+//   title: string;
+//   subject: string;
+//   projectOwner?: string;
+//   members: Types.ObjectId;
+//   estimationTime: number;
+//   spentTime: number;
+//   deadline: string;
+// }
 
 const { Schema } = mongoose;
-const ProjectSchema = new Schema<ProjectData>(
+const ProjectSchema = new Schema(
   {
     title: {
       type: String,
       required: true,
     },
     subject: String,
-    projectOwner: String,
-/*     members: [  
-    {  type: mongoose.Types.ObjectId, 
-      ref: "user"} ], */
-    members: [ mongoose.Types.ObjectId],
+    projectOwner: { type: mongoose.Types.ObjectId, default: null, ref: 'user' },
+    members: [
+      {  type: mongoose.Types.ObjectId, 
+        ref: "user"} ],
     estimationTime: Number,
     spentTime: Number,
     deadline: String,
@@ -37,4 +36,4 @@ const ProjectSchema = new Schema<ProjectData>(
   }
 );
 
-export default mongoose.model<ProjectData>('project', ProjectSchema);
+export default mongoose.model('project', ProjectSchema);

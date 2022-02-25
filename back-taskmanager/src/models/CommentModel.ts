@@ -1,23 +1,21 @@
 /* eslint-disable import/no-cycle */
-import mongoose, { Types } from 'mongoose';
+import mongoose from 'mongoose';
 
-interface CommentData {
-  _id: string;
-  author: Types.ObjectId;
-  content: string;
-  avatar?: string;
-  status: 'draft' | 'published' | 'trashed' | undefined;
-  task: Types.ObjectId;
-}
+// interface CommentData {
+//   _id: string;
+//   author: Types.ObjectId;
+//   content: string;
+//   avatar?: string;
+//   status: 'draft' | 'published' | 'trashed' | undefined;
+//   task: Types.ObjectId;
+// }
 
 const { Schema } = mongoose;
-const CommentSchema = new Schema<CommentData>(
+const CommentSchema = new Schema(
   {
-    _id: mongoose.Types.ObjectId,
-    author: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
+    user: {
+      type: mongoose.Types.ObjectId,
+      ref: "user",
     },
     content: String,
     avatar: String,
@@ -27,8 +25,8 @@ const CommentSchema = new Schema<CommentData>(
       default: 'draft',
     },
     task: {
-      type: Schema.Types.ObjectId,
-      ref: 'Task',
+      type: mongoose.Types.ObjectId,
+      ref: 'task',
       required: true,
     },
   },
@@ -40,4 +38,4 @@ const CommentSchema = new Schema<CommentData>(
   }
 );
 
-export default mongoose.model<CommentData>('comment', CommentSchema);
+export default mongoose.model('comment', CommentSchema);

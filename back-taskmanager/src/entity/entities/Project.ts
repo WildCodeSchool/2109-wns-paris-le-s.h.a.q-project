@@ -1,5 +1,5 @@
+/* eslint-disable import/no-cycle */
 import { ID, ObjectType, Field } from 'type-graphql';
-import User from './User';
 
 @ObjectType()
 class Project {
@@ -15,8 +15,8 @@ class Project {
   @Field()
   projectOwner?: string;
 
-  @Field(() => [User])
-  members?: User[];
+  @Field(() => [ID])
+  members?: string[];
 
   @Field()
   estimationTime?: number;

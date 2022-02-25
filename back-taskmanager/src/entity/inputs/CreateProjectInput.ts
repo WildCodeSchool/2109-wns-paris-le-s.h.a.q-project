@@ -1,5 +1,4 @@
 import { ID, InputType, Field } from 'type-graphql';
-import User from "../entities/User";
 
 
 @InputType()
@@ -9,13 +8,13 @@ export default class CreateProjectInput {
     title?: string;
   
     @Field()
-    subject?: string;
+    subject?: string; 
   
     @Field()
     projectOwner?: string;
   
     @Field(() => [ID], { nullable: true })
-    members?: User[];
+    members?: string[];
   
     @Field()
     estimationTime?: number;

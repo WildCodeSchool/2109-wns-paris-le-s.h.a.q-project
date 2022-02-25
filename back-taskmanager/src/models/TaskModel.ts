@@ -1,28 +1,35 @@
-import mongoose, { Types } from 'mongoose';
+import mongoose from 'mongoose';
 
-export interface TaskData {
-  id: string;
-  subject?: string;
-  description?: string;
-  projectId?: Types.ObjectId;
-  status?: 'unassigned' | 'in progress' | 'done' | 'to validate' | undefined;
-  priority?: 'low' | 'medium' | 'urgent' | undefined;
-  assigneeId?: Types.ObjectId;
-  initial_time_estimation?: number;
-  initial_time_spent?: number;
-  advancement?: number;
-  deadline?: string;
-  document_upload?: string;
-}
+// export interface TaskData {
+//   id: string;
+//   subject?: string;
+//   description?: string;
+//   projectId?: Types.ObjectId;
+//   status?: 'unassigned' | 'in progress' | 'done' | 'to validate' | undefined;
+//   priority?: 'low' | 'medium' | 'urgent' | undefined;
+//   assigneeId?: Types.ObjectId;
+//   initial_time_estimation?: number;
+//   initial_time_spent?: number;
+//   advancement?: number;
+//   deadline?: string;
+//   document_upload?: string;
+// }
 
 const { Schema } = mongoose;
-const TaskSchema = new Schema<TaskData>(
+const TaskSchema = new Schema(
   {
-/*     id: mongoose.Types.ObjectId, */
+    user: {
+      type: mongoose.Types.ObjectId,
+      ref: 'user',
+    },
+    comment: {
+      type: mongoose.Types.ObjectId,
+      ref: "comment",
+    },
     subject: String,
     description: String,
-    projectId: {
-      type: Schema.Types.ObjectId,
+    project: {
+      type: mongoose.Types.ObjectId,
       ref: 'project',
     },
     status: {
@@ -49,4 +56,4 @@ const TaskSchema = new Schema<TaskData>(
   }
 );
 
-export default mongoose.model<TaskData>('task', TaskSchema);
+export default mongoose.model('task', TaskSchema);

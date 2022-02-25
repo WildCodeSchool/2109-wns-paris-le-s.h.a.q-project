@@ -1,14 +1,12 @@
-import { ID, ObjectType, Field } from 'type-graphql';
+import { ObjectType, Field } from 'type-graphql';
 import Task from './Task';
 import User from './User';
 
 @ObjectType()
 class Comment {
-  @Field(() => ID)
-  _id!: string;
 
   @Field(() => User)
-  author!: User;
+  user!: User;
 
   @Field()
   content!: string;

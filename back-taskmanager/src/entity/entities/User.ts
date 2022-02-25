@@ -17,6 +17,9 @@ class User {
   @Field()
   password!: string;
 
+  // @Field(() => ID)
+  // task?: Task;
+
   @Field()
   photo?: string;
 

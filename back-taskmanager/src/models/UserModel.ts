@@ -1,20 +1,19 @@
 /* eslint-disable import/no-cycle */
 import mongoose from 'mongoose';
 
-export interface UserData {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  photo?: string;
-  role: 'admin' | 'developer' | 'project manager' | 'other' | undefined;
-}
+// export interface UserData {
+//   id: string;
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   password: string;
+//   photo?: string;
+//   role: 'admin' | 'developer' | 'project manager' | 'other' | undefined;
+// }
 
 const { Schema } = mongoose;
-const UserSchema = new Schema<UserData>(
+const UserSchema = new Schema(
   {
-/*     id: mongoose.Types.ObjectId, */
     firstName: {
       type: String,
       required: true,
@@ -31,6 +30,10 @@ const UserSchema = new Schema<UserData>(
       type: String,
       required: true,
     },
+    // task: {
+    //   type: mongoose.Types.ObjectId,
+    //   ref: "task",
+    // },
     photo: String,
     role: {
       type: String,
@@ -46,4 +49,4 @@ const UserSchema = new Schema<UserData>(
   }
 );
 
-export default mongoose.model<UserData>('user', UserSchema);
+export default mongoose.model('user', UserSchema);
