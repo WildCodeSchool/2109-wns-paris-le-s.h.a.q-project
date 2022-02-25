@@ -8,6 +8,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { IAlertDialogSlide } from 'interfaces';
+import AddTask from '@mui/icons-material/AddTask';
+import Clear from '@mui/icons-material/Clear';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -19,16 +21,16 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const AlertDialogSlide = ({
-  handleClose,
-  open,
-  setConfirmation,
+  handleCloseDeleteTask,
+  openDeleteTask,
+  setConfirmationDeleteTask,
 }: IAlertDialogSlide) => {
   return (
     <Dialog
-      open={open}
+      open={openDeleteTask}
       TransitionComponent={Transition}
       keepMounted
-      onClose={handleClose}
+      onClose={handleCloseDeleteTask}
       aria-describedby="alert-dialog-slide-description"
     >
       <DialogTitle>{'Suppression'}</DialogTitle>
@@ -38,8 +40,20 @@ const AlertDialogSlide = ({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => setConfirmation(false)}>Annuler</Button>
-        <Button onClick={() => setConfirmation(true)}>Confirmer</Button>
+        <Button
+          onClick={() => setConfirmationDeleteTask(false)}
+          startIcon={<Clear />}
+          variant="outlined"
+        >
+          Annuler
+        </Button>
+        <Button
+          onClick={() => setConfirmationDeleteTask(true)}
+          startIcon={<AddTask />}
+          variant="outlined"
+        >
+          Confirmer
+        </Button>
       </DialogActions>
     </Dialog>
   );

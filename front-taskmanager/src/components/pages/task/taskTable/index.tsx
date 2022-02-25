@@ -18,11 +18,11 @@ import { FGetComparator, FStableSort } from 'functions';
 
 const TaskTable = ({ data, refetch }) => {
   const [order, setOrder] = React.useState<TOrder>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof ITaskData>('dueDate');
+  const [orderBy, setOrderBy] = React.useState<keyof ITaskData>('');
   const [selected, setSelected] = React.useState<string[]>([]);
   const [page, setPage] = React.useState<number>(0);
   const [dense, setDense] = React.useState<boolean>(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState<number>(10);
 
   const rows = data;
 
@@ -85,8 +85,8 @@ const TaskTable = ({ data, refetch }) => {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
   return (
-    <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
+    <>
+      <Paper>
         <EnhancedTableToolbar
           numSelected={selected.length}
           elementId={selected}
@@ -125,6 +125,17 @@ const TaskTable = ({ data, refetch }) => {
                       tabIndex={-1}
                       key={row.id}
                       selected={isItemSelected}
+                      sx={
+                        index % 2
+                          ? {
+                              backgroundColor: '#dde9ff48',
+                              textTransform: 'capitalize',
+                            }
+                          : {
+                              backgroundColor: 'white',
+                              textTransform: 'capitalize',
+                            }
+                      }
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
@@ -140,13 +151,14 @@ const TaskTable = ({ data, refetch }) => {
                         id={labelId}
                         scope="row"
                         padding="none"
+                        align="center"
                       >
                         {row.subject}
                       </TableCell>
-                      <TableCell align="left">{row.project}</TableCell>
-                      <TableCell align="left">{row.status}</TableCell>
-                      <TableCell align="left">{row.assignee}</TableCell>
-                      <TableCell align="left">{row.dueDate}</TableCell>
+                      <TableCell align="center">{row.project}</TableCell>
+                      <TableCell align="center">{row.status}</TableCell>
+                      <TableCell align="center">{row.assignee}</TableCell>
+                      <TableCell align="center">{row.dueDate}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -172,11 +184,11 @@ const TaskTable = ({ data, refetch }) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
+      {/* <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
-      />
-    </Box>
+      /> */}
+    </>
   );
 };
 

@@ -5,34 +5,43 @@ import { useMutation } from '@apollo/client';
 import CreateTaskMutation from 'graphql/task/CreateTaskMutation';
 import { Subject } from '@material-ui/icons';
 import { ICreateTask, ITaskInput } from 'interfaces';
+import ButtonAdd from 'components/shared/ButtonAdd';
 
 const styled = {
   input: {
-    mx: 4,
-    my: 2,
+    mx: 2,
+    my: 1,
   },
 };
 
-const TaskInput = ({ refetch }: ITaskInput) => {
-  const [addTask, { data, loading, error }] = useMutation(CreateTaskMutation);
-
+const TaskInput = ({ refetch, handleCloseAddTask }: ITaskInput) => {
   const { control, handleSubmit, reset } = useForm<ICreateTask>({
     mode: 'onChange',
   });
 
-  if (loading) return 'Submitting...';
-  if (error) return `Submission error! ${error.message}`;
+  const [
+    addTask,
+    { data: dataOnAdd, loading: loadingOnAdd, error: errorOnAdd },
+  ] = useMutation(CreateTaskMutation);
+  if (loadingOnAdd) return 'Submitting...';
+  if (errorOnAdd) return `Submission error! ${errorOnAdd.message}`;
 
   const submitForm = async (input: ICreateTask) => {
     reset();
     await addTask({ variables: { input: input } });
     refetch();
+    handleCloseAddTask();
   };
 
   return (
-    <form onSubmit={handleSubmit(submitForm)}>
-      <Grid container justifyContent="center" direction="row">
-        <Grid item>
+    <form id="test" onSubmit={handleSubmit(submitForm)}>
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        direction="row"
+      >
+        <Grid item justifyContent="space-around">
           <Controller
             control={control}
             name="subject"
@@ -61,6 +70,8 @@ const TaskInput = ({ refetch }: ITaskInput) => {
               />
             )}
           />
+        </Grid>
+        <Grid item justifyContent="space-around">
           <Controller
             control={control}
             name="status"
@@ -71,7 +82,7 @@ const TaskInput = ({ refetch }: ITaskInput) => {
                 id="status"
                 label="Status"
                 type="text"
-                sx={styled.input}
+                sx={{ width: '30%', my: 1 }}
               />
             )}
           />
@@ -85,7 +96,7 @@ const TaskInput = ({ refetch }: ITaskInput) => {
                 id="assignee"
                 label="Assignee"
                 type="text"
-                sx={styled.input}
+                sx={{ width: '30%', mx: 2, my: 1 }}
               />
             )}
           />
@@ -97,13 +108,14 @@ const TaskInput = ({ refetch }: ITaskInput) => {
               <TextField
                 {...field}
                 id="dueDate"
-                label="Due Date"
-                type="text"
-                sx={styled.input}
+                type="date"
+                sx={{ width: '30%', my: 1 }}
               />
             )}
           />
-          {/* <Controller
+        </Grid>
+        {/* <Grid item justifyContent="center"> */}
+        {/* <Controller
             control={control}
             name="description"
             defaultValue=""
@@ -117,13 +129,18 @@ const TaskInput = ({ refetch }: ITaskInput) => {
               />
             )}
           /> */}
-        </Grid>
+        {/* <Button
+            type="submit"
+            style={{ marginTop: 15, outline: '1px solid #6495ed' }}
+          >
+            Créer nouvelle tâche
+          </Button> */}
+        {/* <ButtonAdd title="Confirmer l'ajout de cette tâche" />
+        </Grid> */}
         {/* <Grid item xs={12}>
             
         </Grid> */}
       </Grid>
-
-      <Button type="submit">Créer nouvelle tâche</Button>
     </form>
   );
 };

@@ -7,20 +7,19 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { visuallyHidden } from '@mui/utils';
 import { IEnhancedTableProps, ITaskData, IHeadCell } from 'interfaces';
+import { Typography } from '@mui/material';
 
 const headCells: readonly IHeadCell[] = [
   {
     id: 'subject',
-    numeric: false,
     disablePadding: true,
     label: 'Sujet',
   },
-  { id: 'project', numeric: false, disablePadding: false, label: 'Projet' },
-  { id: 'status', numeric: false, disablePadding: false, label: 'Statuts' },
-  { id: 'assignee', numeric: false, disablePadding: false, label: 'Assigné à' },
+  { id: 'project', disablePadding: false, label: 'Projet' },
+  { id: 'status', disablePadding: false, label: 'Statuts' },
+  { id: 'assignee', disablePadding: false, label: 'Assigné à' },
   {
     id: 'dueDate',
-    numeric: false,
     disablePadding: false,
     label: 'Date de fin',
   },
@@ -42,9 +41,10 @@ const EnhancedTableHead = (props: IEnhancedTableProps) => {
 
   return (
     <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
+      <TableRow sx={{ backgroundColor: '#6495ed' }}>
+        <TableCell padding="checkbox" sx={{ borderRight: '1px solid white' }}>
           <Checkbox
+            sx={{ color: 'white', justifyContent: 'center' }}
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
@@ -53,8 +53,13 @@ const EnhancedTableHead = (props: IEnhancedTableProps) => {
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
+            sx={{
+              color: 'white',
+              textTransform: 'uppercase',
+              borderRight: '1px solid black',
+            }}
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
+            align={'center'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -66,7 +71,7 @@ const EnhancedTableHead = (props: IEnhancedTableProps) => {
               {headCell.label}
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  {order === 'desc' ? 'ordre descendant' : 'ordre ascendant'}
                 </Box>
               ) : null}
             </TableSortLabel>

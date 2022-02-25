@@ -1,10 +1,9 @@
-import { IConfirmation } from 'interfaces';
 import { Dispatch, SetStateAction } from 'react';
 
 interface IAlertDialogSlide {
-  handleClose: () => void;
-  setConfirmation: Dispatch<SetStateAction<boolean>>;
-  open: boolean;
+  handleCloseDeleteTask: () => void;
+  setConfirmationDeleteTask: Dispatch<SetStateAction<any>>;
+  openDeleteTask: boolean;
 }
 
 export default IAlertDialogSlide;
