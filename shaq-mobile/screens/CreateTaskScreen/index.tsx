@@ -12,23 +12,24 @@ import {
   VStack,
 } from "native-base";
 import { Entypo, Feather } from "@expo/vector-icons";
+import { ToggleDarkMode } from "../../components/ToggleDarkMode";
 
-const ProductScreen = () => {
+const CreateTaskScreen = () => {
   const instState = [
     {
       title: "Code",
       isCompleted: true,
     },
     {
-      title: "Meeting with team at 9",
+      title: "Arriver à la wild",
       isCompleted: false,
     },
     {
-      title: "Check Emails",
+      title: "Etre en retard",
       isCompleted: false,
     },
     {
-      title: "Write an article",
+      title: "Presenter l'avancement de la semaine",
       isCompleted: false,
     },
   ];
@@ -79,7 +80,7 @@ const ProductScreen = () => {
       flex={1}
     >
       <VStack space={5} alignItems="center">
-        <Heading size="lg">Welcome to NativeBase</Heading>
+        <Heading size="lg">Create Task</Heading>
         <HStack space={2} alignItems="center">
           <Input
             flex={1}
@@ -137,9 +138,10 @@ const ProductScreen = () => {
             />
           </HStack>
         ))}
+        <ToggleDarkMode />
       </VStack>
     </Center>
   );
 };
 
-export default ProductScreen;
+export default CreateTaskScreen;

@@ -220,7 +220,7 @@ function SignUpForm({ props }: any) {
                   bg: "primary.700",
                 }}
                 onPress={() => {
-                  props.navigation.navigate("OTP");
+                  props.navigation.navigate("TasksScreen");
                 }}
               >
                 SIGN UP

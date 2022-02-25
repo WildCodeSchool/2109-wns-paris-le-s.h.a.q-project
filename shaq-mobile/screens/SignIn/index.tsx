@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import {
+  Box,
   Button,
-  HStack,
-  VStack,
-  Text,
-  Link,
+  Center,
   Checkbox,
   Divider,
-  Image,
-  useColorModeValue,
-  IconButton,
-  Icon,
-  Pressable,
-  Center,
   Hidden,
-  StatusBar,
+  HStack,
+  Icon,
+  IconButton,
+  Image,
+  Link,
+  Pressable,
   Stack,
-  Box,
+  StatusBar,
+  Text,
+  useColorModeValue,
+  VStack,
 } from "native-base";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import IconGoogle from "./components/IconGoogle";
@@ -165,7 +165,7 @@ export function SignInForm({ props }: any) {
                   bg: "primary.700",
                 }}
                 onPress={() => {
-                  props.navigation.navigate("OTP");
+                  props.navigation.navigate("TasksScreen");
                 }}
               >
                 SIGN IN
@@ -250,6 +250,7 @@ export function SignInForm({ props }: any) {
     </KeyboardAwareScrollView>
   );
 }
+
 export default function SignIn(props: any) {
   return (
     <>
