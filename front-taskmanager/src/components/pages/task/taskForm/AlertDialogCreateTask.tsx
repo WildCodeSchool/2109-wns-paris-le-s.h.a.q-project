@@ -13,11 +13,11 @@ import { IAddTaskForm } from 'interfaces';
 
 import { Dispatch, SetStateAction } from 'react';
 
-interface IAlertDialogCreateTask {
-  handleCloseAddTask: () => void;
-  setConfirmationDeleteTask: Dispatch<SetStateAction<any>>;
-  openAddTask: boolean;
-}
+// interface IAlertDialogCreateTask {
+//   handleCloseAddTask: () => void;
+//   setConfirmationDeleteTask: Dispatch<SetStateAction<any>>;
+//   openAddTask: boolean;
+// }
 
 const AlertDialogCreateTask = ({
   refetch,
@@ -41,6 +41,7 @@ const AlertDialogCreateTask = ({
           <AddTaskForm
             refetch={refetch}
             handleCloseAddTask={handleCloseAddTask}
+            openAddTask={undefined}
           />
         </DialogContent>
         <DialogActions>

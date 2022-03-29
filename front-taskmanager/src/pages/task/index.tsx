@@ -7,8 +7,18 @@ import { Container, Grid } from '@material-ui/core';
 const Task = () => {
   const { loading, error, data, refetch } = useQuery(TasksQuery);
 
-  if (loading) return null;
-  if (error) return `Error! ${error}`;
+  if (loading)
+    return (
+      <Container>
+        <p>En attente de chargement...</p>
+      </Container>
+    );
+  if (error)
+    return (
+      <Container>
+        <p>`Error! ${error}`</p>
+      </Container>
+    );
 
   return (
     <Container>
