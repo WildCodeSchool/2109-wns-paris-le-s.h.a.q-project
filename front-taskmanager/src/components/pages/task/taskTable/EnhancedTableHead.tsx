@@ -42,7 +42,7 @@ const EnhancedTableHead = (props: IEnhancedTableProps) => {
   return (
     <TableHead>
       <TableRow sx={{ backgroundColor: '#6495ed' }}>
-        <TableCell padding="checkbox" sx={{ borderRight: '1px solid white' }}>
+        <TableCell padding="checkbox">
           <Checkbox
             sx={{ color: 'white', justifyContent: 'center' }}
             indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -56,7 +56,6 @@ const EnhancedTableHead = (props: IEnhancedTableProps) => {
             sx={{
               color: 'white',
               textTransform: 'uppercase',
-              borderRight: '1px solid black',
             }}
             key={headCell.id}
             align={'center'}

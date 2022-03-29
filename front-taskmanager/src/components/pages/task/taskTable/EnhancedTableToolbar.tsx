@@ -3,13 +3,14 @@ import { useMutation } from '@apollo/client';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
 import ButtonAdd from 'components/shared/ButtonAdd';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
+import FilterListIcon from '@mui/icons-material/FilterListRounded';
 import AlertDialogSlide from 'components/shared/AlertDialogSlide';
 import { IEnhancedTableToolbarProps } from 'interfaces';
 import DeleteTaskMutation from 'graphql/task/DeleteTaskMutation';
-
 import AlertDialogCreateTask from 'components/pages/task/taskForm/AlertDialogCreateTask';
 import { Grid } from '@material-ui/core';
 import { Alert } from '@mui/material';
@@ -78,12 +79,14 @@ const EnhancedTableToolbar = (props: IEnhancedTableToolbarProps) => {
             </Typography>
           </Grid>
 
-          <Grid item>
+          <Grid item style={{ width: '100%' }}>
             <Toolbar
               sx={{
                 pl: { sm: 2 },
                 pr: { xs: 1, sm: 1 },
                 py: 2,
+                justifyContent: 'space-between',
+                width: '98%',
               }}
             >
               {numSelected > 0 ? (
@@ -109,18 +112,22 @@ const EnhancedTableToolbar = (props: IEnhancedTableToolbarProps) => {
 
               {numSelected > 0 ? (
                 <Typography
-                  color="inherit"
+                  color="error"
                   variant="subtitle1"
                   component="div"
+                  justifySelf="start"
                   sx={{
                     textTransform: 'uppercase',
-                    paddingLeft: '30px',
-                    color: 'red',
                   }}
                 >
                   {numSelected} selected
                 </Typography>
               ) : null}
+              <Tooltip title="Filter list">
+                <IconButton>
+                  <FilterListIcon />
+                </IconButton>
+              </Tooltip>
             </Toolbar>
           </Grid>
         </Grid>
@@ -135,11 +142,11 @@ const EnhancedTableToolbar = (props: IEnhancedTableToolbarProps) => {
         handleCloseDeleteTask={handleCloseDeleteTask}
         setConfirmationDeleteTask={setConfirmationDeleteTask}
       />
-      {confirmationDeleteTask ? (
+      {/* {confirmationDeleteTask ? (
         <Alert severity="success" color="info">
           This is a success alert — check it out!
         </Alert>
-      ) : null}
+      ) : null} */}
     </>
   );
 };
