@@ -1,7 +1,7 @@
 import { ApolloServer, gql } from 'apollo-server';
 // import { isType } from 'graphql';
 import createServer from '../createServer';
-import TaskModel from '../models/TaskModels';
+import TaskModel from '../models/TaskModel';
 
 let server: ApolloServer;
 

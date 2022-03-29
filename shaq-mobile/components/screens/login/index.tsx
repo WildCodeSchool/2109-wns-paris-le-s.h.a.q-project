@@ -1,10 +1,10 @@
 import React from "react";
-import { Text, TextInput, View } from "../../Themed";
-import { Pressable, StyleSheet } from "react-native";
+import { Text, View } from "../../Themed";
+import { StyleSheet } from "react-native";
 
 const Login = ({ navigation }) => {
-  const [username, onChangeUsername] = React.useState("Username");
-  const [password, onChangePassword] = React.useState("Password");
+  const [username, onChangeUsername] = React.useState();
+  const [password, onChangePassword] = React.useState();
   const navigateToPage = () => {
     navigation.navigate("Tasks", {
       screen: "TabOne",
@@ -18,19 +18,6 @@ const Login = ({ navigation }) => {
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      <TextInput
-        style={styles.inputText}
-        onChangeText={onChangeUsername}
-        value={username}
-      />
-      <TextInput
-        style={styles.inputText}
-        onChangeText={onChangePassword}
-        value={password}
-      />
-      <Pressable style={styles.button} onPress={() => navigateToPage()}>
-        <Text style={styles.text}>Login</Text>
-      </Pressable>
     </View>
   );
 };
@@ -52,11 +39,9 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   inputText: {
-    width: 130,
-    height: 40,
+    width: 230,
+    height: 50,
     margin: 12,
-    borderWidth: 1,
-    padding: 10,
   },
   button: {
     borderRadius: 50,

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import 'reflect-metadata';
 
 import createConnection from './createConnection';
@@ -5,18 +6,14 @@ import createServer from './createServer';
 
 async function start() {
   try {
-    // eslint-disable-next-line no-console
     console.log('awaiting for database connection');
     await createConnection('mongodb://mongodb:27017/task_manager');
-    // eslint-disable-next-line no-console
     console.log('connected to database');
     const server = await createServer();
     // Start the server
     const { url } = await server.listen(4000);
-    // eslint-disable-next-line no-console
     console.log(`Server is running, GraphQL Playground available at ${url}`);
   } catch (err: unknown) {
-    // eslint-disable-next-line no-console
     console.log(err);
   }
 }
