@@ -3,23 +3,26 @@ import bcrypt from 'bcryptjs';
 import { ApolloError } from 'apollo-server';
 import { Resolver, Query, Arg } from 'type-graphql';
 import jwt from 'jsonwebtoken';
+// eslint-disable-next-line import/no-cycle
 import { jwtKey } from '../createServer';
+import UserModel from '../models/UserModel';
 
-const usersDB = [
-  {
-    email: 'admin@gmail.com',
-    hash: bcrypt.hashSync('p4ssw0rd', 10),
-  },
-];
+// const usersDB = [
+//   {
+//     email: 'admin@gmail.com',
+//     hash: bcrypt.hashSync('p4ssw0rd', 10),
+//   },
+// ];
 @Resolver()
 export default class LoginResolver {
   @Query(() => String)
-  login(
+  async login(
     @Arg('email') email: string,
     @Arg('password') password: string
-  ): string {
-    const user = usersDB.find((dbUser) => dbUser.email === email);
-    if (user && bcrypt.compareSync(password, user.hash)) {
+  ): Promise<string> {
+    const user = await UserModel.findOne({ email });
+
+    if (user && bcrypt.compareSync(password, user.password)) {
       const token = jwt.sign(
         {
           user: user.email,
@@ -28,6 +31,6 @@ export default class LoginResolver {
       );
       return token;
     }
-    throw new ApolloError('Invalid credentials');
+    throw new ApolloError('Identifiant ou mot de passe incorrect');
   }
 }
