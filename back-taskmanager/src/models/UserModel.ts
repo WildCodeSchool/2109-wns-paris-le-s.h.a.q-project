@@ -34,11 +34,14 @@ const UserSchema = new Schema(
     //   type: mongoose.Types.ObjectId,
     //   ref: "task",
     // },
-    photo: String,
+    photo: {
+      type: String,
+      required: false,
+    },
     role: {
       type: String,
       enum: ['admin', 'developer', 'project manager', 'other'],
-      default: 'draft',
+      default: 'admin',
     },
   },
   {
