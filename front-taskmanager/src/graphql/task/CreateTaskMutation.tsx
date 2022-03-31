@@ -6,10 +6,13 @@ const CreateTaskMutation = gql`
       subject
       description
       project
-      id
-      dueDate
-      assignee
       status
+      priority
+      user
+      initial_time_estimation
+      initial_time_spent
+      advancement
+      deadline
     }
   }
 `;

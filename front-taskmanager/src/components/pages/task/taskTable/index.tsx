@@ -16,9 +16,9 @@ import { ITaskData } from 'interfaces';
 import { TOrder } from 'types';
 import { FGetComparator, FStableSort } from 'functions';
 
-const TaskTable = ({ data, refetch }) => {
+const TaskTable = ({ data, refetch }: any) => {
   const [order, setOrder] = React.useState<TOrder>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof ITaskData>('');
+  const [orderBy, setOrderBy] = React.useState<keyof ITaskData>();
   const [selected, setSelected] = React.useState<string[]>([]);
   const [page, setPage] = React.useState<number>(0);
   const [dense, setDense] = React.useState<boolean>(false);
@@ -37,7 +37,7 @@ const TaskTable = ({ data, refetch }) => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.id);
+      const newSelecteds = rows.map((n: any) => n.id);
       setSelected(newSelecteds);
       return;
     }

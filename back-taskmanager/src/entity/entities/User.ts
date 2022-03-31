@@ -24,7 +24,7 @@ class User {
   photo?: string;
 
   @Field()
-  role!: string;
+  role?: string;
 }
 
 export default User;

@@ -1,15 +1,19 @@
 import { gql } from '@apollo/client';
 
 const TasksQuery = gql`
-  query allTasks {
+  query AllTasks {
     allTasks {
       id
       subject
-      project
       description
-      assignee
-      dueDate
+      project
       status
+      priority
+      user
+      initial_time_estimation
+      initial_time_spent
+      advancement
+      deadline
     }
   }
 `;

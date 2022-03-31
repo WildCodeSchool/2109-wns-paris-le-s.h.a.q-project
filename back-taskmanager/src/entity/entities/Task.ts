@@ -20,7 +20,7 @@ export default class Task {
   @Field()
   status?: string;
 
-  @Field()
+  @Field({ nullable: true })
   priority?: string;
 
   @Field(() => ID)
