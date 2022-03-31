@@ -6,7 +6,7 @@ import User from './User';
 @ObjectType()
 export default class Task {
   @Field(() => ID)
-  id: string | undefined;
+  id!: string;
 
   @Field()
   subject?: string;

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 interface TaskData {
-  id: string;
+  id: string | number;
   subject: string;
   description: string;
   project: string;

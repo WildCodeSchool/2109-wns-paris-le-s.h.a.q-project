@@ -16,12 +16,12 @@ const headCells: readonly IHeadCell[] = [
     label: 'Sujet',
   },
   { id: 'project', disablePadding: false, label: 'Projet' },
+  { id: 'description', disablePadding: false, label: 'Description' },
   { id: 'status', disablePadding: false, label: 'Statuts' },
-  { id: 'assignee', disablePadding: false, label: 'Assigné à' },
   {
-    id: 'dueDate',
+    id: 'user',
     disablePadding: false,
-    label: 'Date de fin',
+    label: 'Utilisateurs',
   },
 ];
 

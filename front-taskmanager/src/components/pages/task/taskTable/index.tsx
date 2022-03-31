@@ -18,7 +18,7 @@ import { FGetComparator, FStableSort } from 'functions';
 
 const TaskTable = ({ data, refetch }: any) => {
   const [order, setOrder] = React.useState<TOrder>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof ITaskData>();
+  const [orderBy, setOrderBy] = React.useState<keyof ITaskData>('deadline');
   const [selected, setSelected] = React.useState<string[]>([]);
   const [page, setPage] = React.useState<number>(0);
   const [dense, setDense] = React.useState<boolean>(false);
@@ -156,9 +156,9 @@ const TaskTable = ({ data, refetch }: any) => {
                         {row.subject}
                       </TableCell>
                       <TableCell align="center">{row.project}</TableCell>
+                      <TableCell align="center">{row.description}</TableCell>
                       <TableCell align="center">{row.status}</TableCell>
-                      <TableCell align="center">{row.assignee}</TableCell>
-                      <TableCell align="center">{row.dueDate}</TableCell>
+                      <TableCell align="center">{row.user}</TableCell>
                     </TableRow>
                   );
                 })}
