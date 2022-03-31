@@ -60,14 +60,14 @@ const AddTaskForm = ({ refetch, handleCloseAddTask }: IAddTaskForm) => {
             <TaskInput
               control={control}
               name="subject"
-              label="Subject"
+              label="Sujet"
               type="text"
               styled={styled.input}
             />
             <TaskInput
               control={control}
               name="project"
-              label="Project"
+              label="Projet"
               type="text"
               styled={styled.input}
             />
@@ -77,20 +77,20 @@ const AddTaskForm = ({ refetch, handleCloseAddTask }: IAddTaskForm) => {
             <TaskInput
               control={control}
               name="status"
-              label="Status"
+              label="Statut"
               type="text"
               styled={{ width: '31.3%', my: 1 }}
             />
             <TaskInput
               control={control}
-              name="assignee"
-              label="Assignee"
+              name="user"
+              label="Utilisateur"
               type="text"
               styled={{ width: '31.3%', mx: 2, my: 1 }}
             />
             <TaskInput
               control={control}
-              name="dueDate"
+              name="deadline"
               label=""
               type="date"
               styled={{ width: '31.3%', my: 1 }}

@@ -1,6 +1,8 @@
+import ITaskData from '../ITaskData';
+
 interface ITaskInput {
   control: any;
-  name: string;
+  name: keyof ITaskData;
   label: string;
   type: string;
   styled: any;

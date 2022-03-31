@@ -3,13 +3,13 @@ import { ID, InputType, Field } from 'type-graphql';
 @InputType()
 export default class CreateTaskInput {
   @Field()
-  subject?: string;
+  subject!: string;
 
   @Field()
-  description?: string;
+  description!: string;
 
   @Field(() => ID)
-  project?: string;
+  project!: string;
 
   @Field()
   status?: string;
@@ -18,18 +18,18 @@ export default class CreateTaskInput {
   priority?: string;
 
   @Field(() => ID)
-  user?: string;
+  user!: string;
 
-  @Field()
+  @Field({ nullable: true })
   initial_time_estimation?: number;
 
-  @Field()
+  @Field({ nullable: true })
   initial_time_spent?: number;
 
-  @Field()
+  @Field({ nullable: true })
   advancement?: number;
 
-  @Field()
+  @Field({ nullable: true })
   deadline?: string;
 
   /*   @Field()
