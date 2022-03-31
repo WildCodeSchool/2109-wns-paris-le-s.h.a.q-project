@@ -1,9 +1,7 @@
 import React from 'react';
-import bcrypt from 'bcryptjs';
 import { useForm, Controller } from 'react-hook-form';
 import { TextField, Button } from '@mui/material';
 import { gql, useLazyQuery } from '@apollo/client';
-import login from '../../../../back-taskmanager/src/resolvers/LoginResolver';
 
 interface ISignInInput {
   email: string;
@@ -21,24 +19,17 @@ export default function SignInForm() {
     mode: 'onChange',
   });
 
-  const [login, { loading, error, data }] = useLazyQuery(LOGIN);
+  const [getLogin, { loading, error, data }] = useLazyQuery(LOGIN);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :`${error}`</p>;
+  if (data) {
+    localStorage.setItem('token', data.login);
+  }
 
-  const submitForm = ({ email, password }: ISignInInput) => {
-    // const hashData = {
-    //   ...dataForm,
-    //   password: bcrypt.hashSync(dataForm.password, 10),
-    // };
-    password = bcrypt.hashSync(password, 10);
-    console.log(email, password);
-
-    login({
-      variables: { email: email, password: password },
+  const submitForm = (dataForm: ISignInInput) => {
+    getLogin({
+      variables: { ...dataForm },
     });
-    console.log(
-      'data on submit',
-      login({ variables: { email: email, password: password } })
-    );
-    console.log('dataOnSubmit', data);
   };
 
   return (
