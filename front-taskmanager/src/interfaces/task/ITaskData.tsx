@@ -1,5 +1,5 @@
 interface ITaskData {
-  id: string | number;
+  id: string;
   subject: string;
   description: string;
   project: string;

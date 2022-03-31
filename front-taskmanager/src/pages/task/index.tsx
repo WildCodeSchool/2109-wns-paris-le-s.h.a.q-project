@@ -1,8 +1,8 @@
 import React from 'react';
-import TaskTable from 'components/pages/task/taskTable';
 import { useQuery } from '@apollo/client';
 import TasksQuery from 'graphql/task/TasksQuery';
 import { Container, Grid } from '@material-ui/core';
+import TaskTable from 'components/pages/task/taskTable';
 
 const Task = () => {
   const { loading, error, data, refetch } = useQuery(TasksQuery);

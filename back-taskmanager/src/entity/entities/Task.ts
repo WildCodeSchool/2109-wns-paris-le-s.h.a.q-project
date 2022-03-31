@@ -9,33 +9,33 @@ export default class Task {
   id!: string;
 
   @Field()
-  subject?: string;
+  subject!: string;
 
   @Field()
-  description?: string;
+  description!: string;
 
   @Field(() => ID)
-  project?: Project;
+  project!: Project;
 
-  @Field()
+  @Field({ nullable: true })
   status?: string;
 
   @Field({ nullable: true })
   priority?: string;
 
   @Field(() => ID)
-  user?: User;
+  user!: keyof User;
 
-  @Field()
+  @Field({ nullable: true })
   initial_time_estimation?: number;
 
-  @Field()
+  @Field({ nullable: true })
   initial_time_spent?: number;
 
-  @Field()
+  @Field({ nullable: true })
   advancement?: number;
 
-  @Field()
+  @Field({ nullable: true })
   deadline?: string;
 
   /*   @Field()
