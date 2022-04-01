@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable class-methods-use-this */
-import { Resolver, Query, Mutation, Arg } from 'type-graphql';
+import { Resolver, Query, Mutation, Arg, Authorized } from 'type-graphql';
+// import { isAuth } from '../modules/middleware/isAuth';
 import CreateTaskInput from '../entity/inputs/CreateTaskInput';
 import UpdateTaskInput from '../entity/inputs/UpdateTaskInput';
 import Task from '../entity/entities/Task';
@@ -8,23 +9,12 @@ import TaskModels from '../models/TaskModel';
 
 @Resolver(Task)
 class TaskResolver {
+  @Authorized()
   @Query(() => [Task])
   async allTasks() {
     const tasks = await TaskModels.find();
     return tasks;
   }
-
-/*   @Mutation(() => Task)
-  async createTask(@Arg('input') createTaskInput: CreateTaskInput) {
-    try {
-      await TaskModels.init();
-      const newTask = await TaskModels.create(createTaskInput);
-      const createdTask = await newTask.save();
-      return createdTask;
-    } catch (err) {
-      return console.log(err);
-    }
-  } */
 
   @Mutation(() => Task)
   async createTask(@Arg('input') createTaskInput: CreateTaskInput) {

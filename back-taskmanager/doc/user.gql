@@ -1,0 +1,17 @@
+query AllUsers {
+  allUsers {
+    firstName
+    lastName
+    email
+    password
+    role
+  }
+}
+
+query Login($password: String!, $email: String!) {
+  login(password: $password, email: $email)
+}
+# {
+#  "password": "test",
+#   "email": "test@gmail.com"
+# }
