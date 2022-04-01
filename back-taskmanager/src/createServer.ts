@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { ApolloServer, AuthenticationError } from 'apollo-server';
+import { ApolloError, ApolloServer, AuthenticationError } from 'apollo-server';
 import { buildSchema } from 'type-graphql';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
@@ -19,25 +19,31 @@ async function createServer() {
       UserResolver,
       ProjectResolver,
       LoginResolver,
-    ], // add this
+    ],
+    authChecker: ({ context }, roles) => {
+      if (context.authenticatedUserEmail) {
+        return true;
+      }
+      throw new ApolloError(
+        'Vous devez être connecté(e) pour accéder à cette ressource'
+      );
+    },
+    authMode: 'null',
   });
   const server = new ApolloServer({
     schema,
     context: ({ req }) => {
-      // console.log(req.headers.authorization);
-      const token = req.headers.authorization || '';
+      const token = req.headers.authorization;
 
       if (token) {
         let payload: JwtPayload;
         try {
           payload = jwt.verify(token, jwtKey) as JwtPayload;
-          // console.log(payload);
           return { authenticatedUserEmail: payload.user };
         } catch (err) {
-          console.log('err', err);
-          throw new AuthenticationError('Vous devez être connecté(e)');
+          throw new AuthenticationError('Veuillez vous reconnecter');
         }
-      } else return {};
+      } else return false;
     },
   });
   return server;

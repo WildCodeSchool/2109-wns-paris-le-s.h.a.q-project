@@ -1,0 +1,79 @@
+# Env Test query and mutation here
+# READ
+query AllTasks {
+  allTasks {
+    id
+    subject
+    description
+    project
+    status
+    priority
+    user
+    initial_time_estimation
+    initial_time_spent
+    advancement
+    deadline
+  }
+}
+
+# CREATE
+mutation CreateTask($input: CreateTaskInput!) {
+  createTask(input: $input) {
+    subject
+    description
+    project
+    status
+    priority
+    user
+    initial_time_estimation
+    initial_time_spent
+    advancement
+    deadline
+  }
+}
+# Example of variable for create new env test
+# "input": {
+#   "subject": "test2",
+#   "description": "test2",
+#   "project": "test2",
+#   "status": "test2",
+#   "advancement": 0,
+#   "deadline": "mardi",
+#   "initial_time_estimation": 1,
+#   "initial_time_spent": 0,
+#   "priority": "high",
+#   "user": "soso"
+# }
+
+# UPDATE
+mutation UpdateTask($data: UpdateTaskInput!, $updateTaskId: String!) {
+  updateTask(data: $data, id: $updateTaskId) {
+    subject
+    description
+    project
+    status
+    priority
+    user
+    initial_time_estimation
+    initial_time_spent
+    advancement
+    deadline
+  }
+}
+# Example of variable for edit env tes
+# {
+#   "id": "61e01728d6af7da26c54016a",
+#   "updateEnv": {
+#     "name": "gamma",
+#     "isFree": false
+#   }
+# }
+
+# DELETE
+mutation DeleteTask($deleteTaskId: String!) {
+  deleteTask(id: $deleteTaskId)
+}
+# Example of variable for delete env test
+# {
+#    "deleteTaskId": "61e039bdeb23f4e937ddd4f3"
+# }

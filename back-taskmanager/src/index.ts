@@ -10,6 +10,8 @@ async function start() {
     await createConnection('mongodb://mongodb:27017/task_manager');
     console.log('connected to database');
     const server = await createServer();
+    console.log('create server ok');
+
     // Start the server
     const { url } = await server.listen(4000);
     console.log(`Server is running, GraphQL Playground available at ${url}`);
