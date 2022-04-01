@@ -7,7 +7,6 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { visuallyHidden } from '@mui/utils';
 import { IEnhancedTableProps, ITaskData, IHeadCell } from 'interfaces';
-import { Typography } from '@mui/material';
 
 const headCells: readonly IHeadCell[] = [
   {

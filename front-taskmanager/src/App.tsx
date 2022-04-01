@@ -1,13 +1,43 @@
-import * as React from 'react';
-import Task from 'pages/task';
-import './App.css';
-import SignInForm from './components/login/SignInForm';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+//styles
+// import "./App.css";
 
-const App = () => (
-  <div className="App">
-    <Task />
-    <SignInForm />
-  </div>
-);
+// pages & components
+import Login from "pages/login";
+import Task from "pages/task";
 
-export default App;
+function App() {
+  return (
+    <div className="App">
+       <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/login" element={ <Login/> } />
+            <Route path="/task" element={ <Task/> } />
+          </Routes>
+       </BrowserRouter>
+    </div>
+  )
+}
+
+export default App
+
+
+// const App = () => {
+//   return (
+//     <Router>
+//       <Routes>
+//         <Route path="/login">
+//           <Login />
+//         </Route>
+//         <Route path="/">
+//           <Task />
+//         </Route>
+//       </Routes>
+//     </Router>
+//   );
+// };
+
+// export default App;
+
+
