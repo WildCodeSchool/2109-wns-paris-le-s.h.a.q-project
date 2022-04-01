@@ -1,94 +1,17 @@
-query GET_ALL_USER {
-  getAllUser {
-    id
+query AllUsers {
+  allUsers {
     firstName
     lastName
     email
     password
-    createdAt
-    updatedAt
+    role
   }
 }
 
-query AUTHENTICATE_USER($email: String!, $password: String!) {
-  authenticateUser(email: $email, password: $password) {
-    token
-    user {
-      id
-      firstName
-      lastName
-      email
-      password
-      createdAt
-      updatedAt
-    }
-  }
+query Login($password: String!, $email: String!) {
+  login(password: $password, email: $email)
 }
 # {
-#   "email": "ddddt@cocoe.ffdsr",
-#   "password": "test"
-# }
-
-mutation REGISTER_NEW_USER(
-  $firstName: String!
-  $lastName: String!
-  $email: String!
-  $password: String!
-) {
-  registerUser(
-    newUser: {
-      firstName: $firstName
-      lastName: $lastName
-      email: $email
-      password: $password
-    }
-  ) {
-    token
-    user {
-      id
-      firstName
-      lastName
-      email
-      createdAt
-      updatedAt
-    }
-  }
-}
-# {
-#   "firstName": "Nom",
-#   "lastName": "Prénom",
-#   "email": "soso@coco.fr",
-#   "password": "test"
-# }
-
-mutation DELETE_USER_BY_ID($id: ID!) {
-  deleteUserById(id: $id) {
-    id
-    message
-    success
-  }
-}
-# {
-#   "id": "61e058fb0b8602d6a130d8cc"
-# }
-
-mutation EDIT_USER_BY_ID($id: ID!, $updateUser: userInput!) {
-  editUserById(id: $id, updateUser: $updateUser) {
-    id
-    firstName
-    lastName
-    email
-    password
-    createdAt
-    updatedAt
-  }
-}
-#  {
-#   "id": "61e0596cce3856a0938fcfd9",
-#   "updateUser": {
-#     "firstName": "Nom updated 2",
-#     "lastName": "Prénom updated 2",
-#     "email": "soso@coco.fr",
-#     "password": "test"
-#   }
+#  "password": "test",
+#   "email": "test@gmail.com"
 # }

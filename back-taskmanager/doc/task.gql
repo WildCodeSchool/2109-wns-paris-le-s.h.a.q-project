@@ -62,12 +62,13 @@ mutation UpdateTask($data: UpdateTaskInput!, $updateTaskId: String!) {
 }
 # Example of variable for edit env tes
 # {
-#   "id": "61e01728d6af7da26c54016a",
-#   "updateEnv": {
-#     "name": "gamma",
-#     "isFree": false
-#   }
-# }
+# "data": {
+#   "subject": "test1",
+#   "description": "test1",
+#   "project": "test1",
+#   "user": "alfred"
+# },
+# "updateTaskId": "62457ba750bc38193b399e56"# }
 
 # DELETE
 mutation DeleteTask($deleteTaskId: String!) {

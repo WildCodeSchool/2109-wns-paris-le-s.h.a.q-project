@@ -16,18 +16,6 @@ class TaskResolver {
     return tasks;
   }
 
-  /*   @Mutation(() => Task)
-  async createTask(@Arg('input') createTaskInput: CreateTaskInput) {
-    try {
-      await TaskModels.init();
-      const newTask = await TaskModels.create(createTaskInput);
-      const createdTask = await newTask.save();
-      return createdTask;
-    } catch (err) {
-      return console.log(err);
-    }
-  } */
-  // @UseMiddleware(isAuth)
   @Mutation(() => Task)
   async createTask(@Arg('input') createTaskInput: CreateTaskInput) {
     try {

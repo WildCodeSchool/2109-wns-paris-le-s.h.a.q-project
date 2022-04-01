@@ -20,10 +20,10 @@ class User {
   // @Field(() => ID)
   // task?: Task;
 
-  @Field()
+  @Field({ nullable: true })
   photo?: string;
 
-  @Field()
+  @Field({ nullable: true })
   role?: string;
 }
 
