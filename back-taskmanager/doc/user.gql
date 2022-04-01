@@ -15,3 +15,25 @@ query Login($password: String!, $email: String!) {
 #  "password": "test",
 #   "email": "test@gmail.com"
 # }
+
+mutation CreateUser($createUserInput: CreateUserInput!) {
+  createUser(input: $createUserInput) {
+    id
+    firstName
+    lastName
+    email
+    password
+    photo
+    role
+  }
+}
+# {
+#   "createUserInput":
+#     {
+#       "firstName": "alfred",
+#       "lastName": "hitchkock",
+#       "email": "alfred@a.a",
+#       "password": "alfred"
+
+#     }
+# }

@@ -6,6 +6,7 @@ import CreateUserInput from '../entity/inputs/CreateUserInput';
 import User from '../entity/entities/User';
 import UserModel from '../models/UserModel';
 import logger from '../modules/middleware/logger';
+import UpdateUserInput from '../entity/inputs/UpdateUserInput';
 
 @Resolver(User)
 class UserResolver {
@@ -29,6 +30,27 @@ class UserResolver {
     } catch (err) {
       return console.log(err);
     }
+  }
+
+  @Mutation(() => User)
+  async updateTask(@Arg('id') _id: string, @Arg('data') data: UpdateUserInput) {
+    const user = await UserModel.findOne({ _id }).exec();
+    if (!user) throw new Error('Task not found!');
+    if (user !== null && user !== undefined) {
+      Object.assign(user, data);
+      await user.save();
+    }
+    return user;
+  }
+
+  @Mutation(() => Boolean)
+  async deleteUser(@Arg('id') _id: string) {
+    const user = await UserModel.findOne({ _id }).exec();
+    if (!user) throw new Error('Utilisateur non trouvé!');
+    if (user !== null && user !== undefined) {
+      await user.remove();
+    }
+    return true;
   }
 }
 export default UserResolver;

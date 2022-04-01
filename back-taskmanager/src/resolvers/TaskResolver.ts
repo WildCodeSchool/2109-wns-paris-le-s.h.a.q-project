@@ -47,7 +47,7 @@ class TaskResolver {
   @Mutation(() => Task)
   async updateTask(@Arg('id') _id: string, @Arg('data') data: UpdateTaskInput) {
     const task = await TaskModels.findOne({ _id }).exec();
-    if (!TaskResolver) throw new Error('Task not found!');
+    if (!task) throw new Error('Task not found!');
     if (task !== null && task !== undefined) {
       Object.assign(task, data);
       await task.save();
@@ -58,7 +58,7 @@ class TaskResolver {
   @Mutation(() => Boolean)
   async deleteTask(@Arg('id') _id: string) {
     const task = await TaskModels.findOne({ _id }).exec();
-    if (!TaskResolver) throw new Error('Task not found!');
+    if (!task) throw new Error('Task not found!');
     if (task !== null && task !== undefined) {
       await task.remove();
     }
