@@ -1,11 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-//styles
-// import "./App.css";
 
 // pages & components
-import Login from "pages/login";
+import Login from "./pages/login";
+import SignUp from "./pages/signUp";
 import Task from "pages/task";
-import SignUp from "pages/signUp";
 
 function App() {
   return (
@@ -23,23 +21,5 @@ function App() {
 }
 
 export default App
-
-
-// const App = () => {
-//   return (
-//     <Router>
-//       <Routes>
-//         <Route path="/login">
-//           <Login />
-//         </Route>
-//         <Route path="/">
-//           <Task />
-//         </Route>
-//       </Routes>
-//     </Router>
-//   );
-// };
-
-// export default App;
 
 
