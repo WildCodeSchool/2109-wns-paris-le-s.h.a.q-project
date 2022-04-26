@@ -7,12 +7,6 @@ import jwt from 'jsonwebtoken';
 import { jwtKey } from '../createServer';
 import UserModel from '../models/UserModel';
 
-// const usersDB = [
-//   {
-//     email: 'admin@gmail.com',
-//     hash: bcrypt.hashSync('p4ssw0rd', 10),
-//   },
-// ];
 @Resolver()
 export default class LoginResolver {
   @Query(() => String)

@@ -1,9 +1,32 @@
+version: "1.0.0"
 services:
-  mongodb:
-    image: mongo
   back-taskmanager:
-    image: back-tm
+    build: ./back-taskmanager
+    command: sh -c "yarn run build && yarn run prod"
+    expose:
+      - 5000
+    environment:
+      - SERVER_PORT=5000
+    depends_on:
+      - mongodb
   front-taskmanager:
-    image: front-tm
+    build: ./front-taskmanager
+    command: sh -c "yarn global add serve && serve -s build"
+    volumes:
+      - web-client-build:/app/build
+  mongodb:
+    image: mongo:latest
+  nginx:
+    image: nginx:1.21.3
+    depends_on:
+      - back-taskmanager
+      - front-taskmanager
+    restart: always
     ports:
-      - 5050:3000
+      - ${GATEWAY_PORT:-8000}:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - web-client-build:/web-client-build
+      - ./logs:/var/log/nginx
+volumes:
+  web-client-build:
