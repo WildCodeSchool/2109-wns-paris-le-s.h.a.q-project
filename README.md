@@ -33,7 +33,7 @@ docker-compose -f docker-compose.dev.yml up --build
 To start the project in production mode:
 
 ```bash
-docker-compose -f docker-compose.workinprogess.yml up --build
+GATEWAY_PORT = 8000 docker-compose -f docker-compose.prod.yml up --build
 ```
 
 ## Installation Mobile
