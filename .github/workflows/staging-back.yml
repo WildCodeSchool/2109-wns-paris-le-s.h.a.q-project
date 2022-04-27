@@ -37,7 +37,7 @@ jobs:
       - uses: docker/build-push-action@v2
         name: Build and push
         with:
-          context: ./server
+          context: ./back-taskmanager
           file: ./back-taskmanager/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_BACK_IMAGE_NAME }}:latest
