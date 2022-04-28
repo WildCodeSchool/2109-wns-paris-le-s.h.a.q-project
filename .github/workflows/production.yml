@@ -12,12 +12,8 @@ jobs:
     steps:
       - name: Fetch front from DockerHub
         id: fetch_front_image
-        uses: mxpicture/action-docker-hub-fetch-tags@v1
-        with:
-          repository: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_FRONT_IMAGE_NAME }}:latest
+        uses: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_FRONT_IMAGE_NAME }}:latest
 
       - name: Fetch back from DockerHub
         id: back
-        uses: mxpicture/action-docker-hub-fetch-tags@v1
-        with:
-          repository: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_BACK_IMAGE_NAME }}:latest
+        uses: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_BACK_IMAGE_NAME }}:latest
