@@ -24,13 +24,11 @@ jobs:
         id: docker_build_back
         uses: docker/build-push-action@v2
         with:
-          context: ./back-taskmanager
+          context: shaqteam/shaq-back:latest
           push: true
-          tags: shaqteam/shaq-back:latest
       - name: Build and push front
         id: docker_build_front
         uses: docker/build-push-action@v2
         with:
-          context: ./front-taskmanager
+          context: shaqteam/shaq-front:latest
           push: true
-          tags: shaqteam/shaq-front:latest
