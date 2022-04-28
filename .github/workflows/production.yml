@@ -11,4 +11,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Fetch webhook
-        run: curl -X "https://ops.paris1-0921.wns.wilders.dev/hooks/update-prod"
+        run: curl https://ops.paris1-0921.wns.wilders.dev/hooks/update-prod
