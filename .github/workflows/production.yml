@@ -12,10 +12,10 @@ jobs:
     steps:
       - name: Fetch front from DockerHub
         id: fetch_front_image
-        uses: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_FRONT_IMAGE_NAME }}:latest
+        command: docker pull shaqteam/shaq-front
         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_FRONT_IMAGE_NAME }}:latest
 
       - name: Fetch back from DockerHub
         id: fetch_back_image
-        uses: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_BACK_IMAGE_NAME }}:latest
+        command: docker pull shaqteam/shaq-back
         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_BACK_IMAGE_NAME }}:latest
