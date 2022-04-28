@@ -10,10 +10,5 @@ jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch front from DockerHub
-        id: fetch_front_image
-        run: docker pull shaqteam/shaq-front
-
-      - name: Fetch back from DockerHub
-        id: fetch_back_image
-        run: docker pull shaqteam/shaq-back
+      - name: Fetch webhook
+        run: curl -X "https://ops.paris1-0921.wns.wilders.dev/hooks/update-prod"
