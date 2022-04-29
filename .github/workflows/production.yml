@@ -10,9 +10,9 @@ jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
-      - name: Webhook
-        uses: WildCodeSchool/2109-wns-paris-le-s.h.a.q-project@master
+      - name: Webhook Action
+        uses: joelwmale/webhook-action@2.1.0
         with:
           url: ${{ secrets.WEBHOOK_URL_PRODUCTION }}
-          headers: '{"repository": "WildCodeSchool/2109-wns-paris-le-s.h.a.q-project"}'
-          body: '{"event": "deployment", "repository": "WildCodeSchool/2109-wns-paris-le-s.h.a.q-project"}'
+          # headers: '{"repository": "WildCodeSchool/2109-wns-paris-le-s.h.a.q-project"}'
+          # body: '{"event": "deployment", "repository": "WildCodeSchool/2109-wns-paris-le-s.h.a.q-project"}'
