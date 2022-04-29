@@ -82,10 +82,7 @@ const Login = () => {
       autoComplete="off"
     >
       <Card sx={{ minWidth: 275 }} className={classes.card}>
-        <CardHeader
-          className={classes.header}
-          title="SHAQ-TEAM-hfkiqgfikqgfikq"
-        />
+        <CardHeader className={classes.header} title="Login" />
         <CardContent>
           <Grid container justifyContent="center">
             <Grid item>
