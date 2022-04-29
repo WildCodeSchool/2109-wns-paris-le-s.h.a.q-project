@@ -4,3 +4,5 @@ data
 coverage/
 .idea
 logs
+/fetch-and-deploy-prod.sh
+shaq-mobile/
