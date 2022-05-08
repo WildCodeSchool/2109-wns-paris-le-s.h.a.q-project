@@ -8,6 +8,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardHeader from '@material-ui/core/CardHeader';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Button, Grid, TextField } from '@material-ui/core';
+import { Backdrop, CircularProgress, Typography } from '@mui/material';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -51,29 +52,53 @@ const LOGIN = gql`
 
 const Login = () => {
   const navigate = useNavigate();
-  const [getLogin, { loading, error, data }] = useLazyQuery(LOGIN);
-  const {
+  const [getLogin, { data: loginData, loading: loginLoading, error: loginError }] = useLazyQuery(LOGIN);
+
+    const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<ISignInInput>();
-  const classes = useStyles();
 
-  const submitForm = async (dataForm: ISignInInput) => {
-    console.log(dataForm);
-    await getLogin({
-      variables: { ...dataForm },
-    });
-    navigate('/task', { replace: true });
-  };
 
-  console.log(errors);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :`${error}`</p>;
-  if (data) {
-    localStorage.setItem('token', data.login);
+  if (loginLoading) {
+    console.log('loginLoading | ', loginLoading)
+    return (
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={true}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
   }
+  else if (loginError) {
+    console.log('loginError | ', loginError);
+    return (
+      <Typography variant="body1" component={'p'}>
+        {loginError.message}
+      </Typography>
+    );
+  }
+  else {
+    // const submitForm = async (input: ICreateTask) => {
+    //   reset();
+    //   await addTask({ variables: { input: input } });
+    //   refetch();
+    //   handleCloseAddTask();
+    // };
+
+
+    const submitForm = async (dataForm: ISignInInput) => {
+      await getLogin({
+        variables: { ...dataForm },
+      });
+      navigate('/task', { replace: true });
+    };
+    if (loginData) {
+      console.log('loginData | ', loginData);
+      localStorage.setItem('token', loginData.login);
+    }
 
   return (
     <form
@@ -89,6 +114,7 @@ const Login = () => {
               <Controller
                 name="email"
                 control={control}
+                defaultValue=""
                 render={({ field }) => (
                   <TextField
                     type="email"
@@ -101,70 +127,72 @@ const Login = () => {
               />
             </Grid>
 
-            <Grid item>
-              <Controller
-                name="password"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    variant="outlined"
-                    type="password"
-                    id="password"
-                    label="password"
-                    {...field}
-                  />
-                )}
-              />
+              <Grid item>
+                <Controller
+                  control={control}
+                  name="password"
+                  defaultValue=""
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      id="password"
+                      type="password"
+                      label="Mot de passe"
+                      variant="outlined"
+                    />
+                  )}
+                />
+              </Grid>
+
+              {/* <label htmlFor="email">email</label> */}
+              {/* <input */}
+              {/*  id="email" */}
+              {/*  defaultValue="" */}
+              {/*  aria-invalid={errors.email ? 'true' : 'false'} */}
+              {/*  {...register('email', { */}
+              {/*    required: 'required', */}
+              {/*    pattern: { */}
+              {/*      value: /\S+@\S+\.\S+/, */}
+              {/*      message: 'Entered value does not match email format', */}
+              {/*    }, */}
+              {/*  })} */}
+              {/*  type="email" */}
+              {/*  placeholder="example@mail.com" */}
+              {/* /> */}
+              {/* {errors.email && <span role="alert">{errors.email.message}</span>} */}
+              {/* <label htmlFor="password">password</label> */}
+              {/* <input */}
+              {/*  id="password" */}
+              {/*  defaultValue="" */}
+              {/*  aria-invalid={errors.password ? 'true' : 'false'} */}
+              {/*  {...register('password', { */}
+              {/*    required: 'required', */}
+              {/*    minLength: { */}
+              {/*      value: 5, */}
+              {/*      message: 'min length is 5', */}
+              {/*    }, */}
+              {/*  })} */}
+              {/*  type="password" */}
+              {/*  placeholder="password" */}
+              {/* /> */}
+              {/* {errors.password && ( */}
+              {/*  <span role="alert">{errors.password.message}</span> */}
+              {/* )} */}
             </Grid>
 
-            {/* <label htmlFor="email">email</label> */}
-            {/* <input */}
-            {/*  id="email" */}
-            {/*  defaultValue="" */}
-            {/*  aria-invalid={errors.email ? 'true' : 'false'} */}
-            {/*  {...register('email', { */}
-            {/*    required: 'required', */}
-            {/*    pattern: { */}
-            {/*      value: /\S+@\S+\.\S+/, */}
-            {/*      message: 'Entered value does not match email format', */}
-            {/*    }, */}
-            {/*  })} */}
-            {/*  type="email" */}
-            {/*  placeholder="example@mail.com" */}
-            {/* /> */}
-            {/* {errors.email && <span role="alert">{errors.email.message}</span>} */}
-            {/* <label htmlFor="password">password</label> */}
-            {/* <input */}
-            {/*  id="password" */}
-            {/*  defaultValue="" */}
-            {/*  aria-invalid={errors.password ? 'true' : 'false'} */}
-            {/*  {...register('password', { */}
-            {/*    required: 'required', */}
-            {/*    minLength: { */}
-            {/*      value: 5, */}
-            {/*      message: 'min length is 5', */}
-            {/*    }, */}
-            {/*  })} */}
-            {/*  type="password" */}
-            {/*  placeholder="password" */}
-            {/* /> */}
-            {/* {errors.password && ( */}
-            {/*  <span role="alert">{errors.password.message}</span> */}
-            {/* )} */}
-          </Grid>
-
-          <div className={classes.link}>
-            <Link to="/signup">No account? Sign up now!</Link>
-          </div>
-        </CardContent>
-        <CardActions>
-          <Button className={classes.loginBtn} type="submit">
-            SUBMIT
-          </Button>
-        </CardActions>
-      </Card>
-    </form>
-  );
+            <div className={classes.link}>
+              <Link to="/signup">No account? Sign up now!</Link>
+            </div>
+          </CardContent>
+          <CardActions>
+            <Button className={classes.loginBtn} type="submit">
+              SUBMIT
+            </Button>
+          </CardActions>
+        </Card>
+      </form>
+    );
+  }
 };
 
 export default Login;
