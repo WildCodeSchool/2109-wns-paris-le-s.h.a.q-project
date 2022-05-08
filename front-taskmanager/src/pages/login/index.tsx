@@ -1,198 +1,188 @@
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { gql, useLazyQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
-import Card from '@mui/material/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import CardHeader from '@material-ui/core/CardHeader';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Button, Grid, TextField } from '@material-ui/core';
-import { Backdrop, CircularProgress, Typography } from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import {
+  Avatar,
+  Backdrop,
+  Box,
+  Button,
+  Checkbox,
+  CircularProgress,
+  CssBaseline,
+  FormControlLabel,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material';
+import LOGIN from '../../graphql/signin/Login';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      // display: 'flex',
-      // flexWrap: 'wrap',
-      // width: 400,
-      // margin: `${theme.spacing(0)} auto`,
-    },
-    loginBtn: {
-      marginTop: theme.spacing(2),
-      flexGrow: 1,
-    },
-    header: {
-      fontFamily: 'Roboto',
-      textAlign: 'center',
-      background: '#ABB0DA',
-      color: '#432C2C',
-    },
-    card: {
-      marginTop: theme.spacing(10),
-    },
-    link: {
-      marginTop: theme.spacing(2),
-      color: '#432C2C',
-      flexGrow: 1,
-    },
-  })
-);
+function Copyright(props: any) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {'Copyright © '}
+      <Link to="https://mui.com/">Your Website</Link> {new Date().getFullYear()}
+      .
+    </Typography>
+  );
+}
 
 interface ISignInInput {
   email: string;
   password: string;
 }
 
-const LOGIN = gql`
-  query Login($password: String!, $email: String!) {
-    login(password: $password, email: $email)
-  }
-`;
-
-const Login = () => {
+export default function SignIn() {
   const navigate = useNavigate();
-  const [getLogin, { data: loginData, loading: loginLoading, error: loginError }] = useLazyQuery(LOGIN);
-
-    const {
+  const [
+    getLogin,
+    { loading: loginLoading, error: loginError, data: loginData },
+  ] = useLazyQuery(LOGIN);
+  const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<ISignInInput>();
 
-
   if (loginLoading) {
-    console.log('loginLoading | ', loginLoading)
+    console.log('loginLoading | ', loginLoading);
     return (
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={true}
+        open
       >
         <CircularProgress color="inherit" />
       </Backdrop>
     );
   }
-  else if (loginError) {
+  if (loginError) {
     console.log('loginError | ', loginError);
     return (
-      <Typography variant="body1" component={'p'}>
+      <Typography variant="body1" component="p">
         {loginError.message}
       </Typography>
     );
   }
-  else {
-    // const submitForm = async (input: ICreateTask) => {
-    //   reset();
-    //   await addTask({ variables: { input: input } });
-    //   refetch();
-    //   handleCloseAddTask();
-    // };
+  // const submitForm = async (input: ICreateTask) => {
+  //   reset();
+  //   await addTask({ variables: { input: input } });
+  //   refetch();
+  //   handleCloseAddTask();
+  // };
 
-
-    const submitForm = async (dataForm: ISignInInput) => {
-      await getLogin({
-        variables: { ...dataForm },
-      });
-      navigate('/task', { replace: true });
-    };
-    if (loginData) {
-      console.log('loginData | ', loginData);
-      localStorage.setItem('token', loginData.login);
-    }
+  const submitForm = async (dataForm: ISignInInput) => {
+    await getLogin({
+      variables: { ...dataForm },
+    });
+    navigate('/task', { replace: true });
+  };
+  if (loginData) {
+    console.log('loginData | ', loginData);
+    localStorage.setItem('token', loginData.login);
+  }
 
   return (
-    <form
-      className={classes.container}
-      onSubmit={handleSubmit(submitForm)}
-      autoComplete="off"
-    >
-      <Card sx={{ minWidth: 275 }} className={classes.card}>
-        <CardHeader className={classes.header} title="Login TEST" />
-        <CardContent>
-          <Grid container justifyContent="center">
-            <Grid item>
-              <Controller
-                name="email"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <TextField
-                    type="email"
-                    {...field}
-                    id="email"
-                    label="Email Address"
-                    variant="outlined"
-                  />
-                )}
-              />
-            </Grid>
-
-              <Grid item>
-                <Controller
-                  control={control}
-                  name="password"
-                  defaultValue=""
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      id="password"
-                      type="password"
-                      label="Mot de passe"
-                      variant="outlined"
-                    />
-                  )}
+    <Grid container component="main" sx={{ height: '100vh' }}>
+      <CssBaseline />
+      <Grid
+        item
+        xs={false}
+        sm={4}
+        md={7}
+        sx={{
+          backgroundImage: 'url(/images/Social_media_adv_SVG.svg)',
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: (t) =>
+            t.palette.mode === 'light'
+              ? t.palette.grey[50]
+              : t.palette.grey[900],
+          backgroundSize: 'contain',
+          backgroundPosition: 'center',
+        }}
+      />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Box
+          sx={{
+            my: 8,
+            mx: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit(submitForm)}
+            sx={{ mt: 1 }}
+          >
+            <Controller
+              name="email"
+              defaultValue=""
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  fullWidth
+                  type="email"
+                  {...field}
+                  id="email"
+                  label="Adresse Email"
+                  variant="outlined"
                 />
-              </Grid>
-
-              {/* <label htmlFor="email">email</label> */}
-              {/* <input */}
-              {/*  id="email" */}
-              {/*  defaultValue="" */}
-              {/*  aria-invalid={errors.email ? 'true' : 'false'} */}
-              {/*  {...register('email', { */}
-              {/*    required: 'required', */}
-              {/*    pattern: { */}
-              {/*      value: /\S+@\S+\.\S+/, */}
-              {/*      message: 'Entered value does not match email format', */}
-              {/*    }, */}
-              {/*  })} */}
-              {/*  type="email" */}
-              {/*  placeholder="example@mail.com" */}
-              {/* /> */}
-              {/* {errors.email && <span role="alert">{errors.email.message}</span>} */}
-              {/* <label htmlFor="password">password</label> */}
-              {/* <input */}
-              {/*  id="password" */}
-              {/*  defaultValue="" */}
-              {/*  aria-invalid={errors.password ? 'true' : 'false'} */}
-              {/*  {...register('password', { */}
-              {/*    required: 'required', */}
-              {/*    minLength: { */}
-              {/*      value: 5, */}
-              {/*      message: 'min length is 5', */}
-              {/*    }, */}
-              {/*  })} */}
-              {/*  type="password" */}
-              {/*  placeholder="password" */}
-              {/* /> */}
-              {/* {errors.password && ( */}
-              {/*  <span role="alert">{errors.password.message}</span> */}
-              {/* )} */}
-            </Grid>
-
-            <div className={classes.link}>
-              <Link to="/signup">No account? Sign up now!</Link>
-            </div>
-          </CardContent>
-          <CardActions>
-            <Button className={classes.loginBtn} type="submit">
-              SUBMIT
+              )}
+            />
+            <Controller
+              name="password"
+              defaultValue=""
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  type="password"
+                  id="password"
+                  label="password"
+                  {...field}
+                />
+              )}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
             </Button>
-          </CardActions>
-        </Card>
-      </form>
-    );
-  }
-};
-
-export default Login;
+            <Grid container>
+              <Grid item xs>
+                <Link to="#">Forgot password?</Link>
+              </Grid>
+              <Grid item>
+                <Link to="/signup">Don't have an account? Sign Up</Link>
+              </Grid>
+            </Grid>
+            <Copyright sx={{ mt: 5 }} />
+          </Box>
+        </Box>
+      </Grid>
+    </Grid>
+  );
+}
