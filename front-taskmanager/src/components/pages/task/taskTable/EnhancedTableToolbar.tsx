@@ -12,8 +12,7 @@ import AlertDialogSlide from 'components/shared/AlertDialogSlide';
 import { IEnhancedTableToolbarProps } from 'interfaces';
 import DeleteTaskMutation from 'graphql/task/DeleteTaskMutation';
 import AlertDialogCreateTask from 'components/pages/task/taskForm/AlertDialogCreateTask';
-import { Grid } from '@material-ui/core';
-import { Alert } from '@mui/material';
+import { Grid } from '@mui/material';
 
 const EnhancedTableToolbar = (props: IEnhancedTableToolbarProps) => {
   const { numSelected, elementId, setSelected, refetch } = props;

@@ -1,10 +1,32 @@
-import React from 'react';
+import * as React from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-
-import '../../style/signUp.css';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { Link, useNavigate } from 'react-router-dom';
+import SIGNUP from '../../graphql/signin/Signup';
+
+function Copyright(props: any) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {'Copyright © '}
+      <Link to="https://mui.com/">Your Website</Link> {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
 interface ISignUnInput {
   firstName: string;
@@ -12,17 +34,6 @@ interface ISignUnInput {
   email: string;
   password: string;
 }
-
-const SIGNUP = gql`
-  mutation CreateUser($createUserInput: CreateUserInput!) {
-    createUser(input: $createUserInput) {
-      firstName
-      lastName
-      email
-      password
-    }
-  }
-`;
 
 const SignUp = () => {
   const {
@@ -32,7 +43,6 @@ const SignUp = () => {
   } = useForm<ISignUnInput>();
   const [createUser, { loading, error, data }] = useMutation(SIGNUP);
   const navigate = useNavigate();
-
   const submitForm = async (dataForm: ISignUnInput) => {
     await createUser({
       variables: { createUserInput: dataForm },
@@ -41,105 +51,109 @@ const SignUp = () => {
   }; // form submit function which will invoke after successful validation
 
   return (
-    <>
-      <h1>Sign Up page</h1>
-      <form onSubmit={handleSubmit(submitForm)} autoComplete="off">
-        <Controller
-          name="firstName"
-          control={control}
-          render={({ field }) => (
-            <TextField {...field} id="firstName" label="First Name" />
-          )}
-        />
-        <Controller
-          name="lastName"
-          control={control}
-          render={({ field }) => (
-            <TextField {...field} id="lastName" label="Last Name" />
-          )}
-        />
-        <Controller
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              type="email"
-              {...field}
-              id="email"
-              label="Email Address"
+    <Grid container component="main" sx={{ height: '100vh' }}>
+      <CssBaseline />
+      <Grid
+        item
+        xs={false}
+        sm={8}
+        md={7}
+        sx={{
+          backgroundImage: 'url(/images/Web_SVG.svg)',
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: (t) =>
+            t.palette.mode === 'light'
+              ? t.palette.grey[50]
+              : t.palette.grey[900],
+          backgroundSize: 'contain',
+          backgroundPosition: 'center',
+        }}
+      />
+      <Grid item xs={12} sm={4} md={5} component={Paper} elevation={6} square>
+        <Box
+          sx={{
+            my: 8,
+            mx: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign Up
+          </Typography>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit(submitForm)}
+            sx={{ mt: 1 }}
+          >
+            <Controller
+              name="firstName"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  id="firstName"
+                  fullWidth
+                  label="First Name"
+                />
+              )}
             />
-          )}
-        />
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              type="password"
-              id="password"
-              label="password"
-              {...field}
+            <Controller
+              name="lastName"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  id="lastName"
+                  fullWidth
+                  label="Last Name"
+                />
+              )}
             />
-          )}
-        />
-        {/* <section> */}
-        {/*  <label>First Name</label> */}
-        {/*  <input */}
-        {/*    {...register('firstName', { */}
-        {/*      required: true, */}
-        {/*      maxLength: 20, */}
-        {/*      pattern: /^[A-Za-z]+$/i, */}
-        {/*    })} */}
-        {/*  /> */}
-        {/*  {errors?.firstName?.type === 'required' && ( */}
-        {/*    <p>This field is required</p> */}
-        {/*  )} */}
-        {/*  {errors?.firstName?.type === 'maxLength' && ( */}
-        {/*    <p>First name cannot exceed 20 characters</p> */}
-        {/*  )} */}
-        {/*  {errors?.firstName?.type === 'pattern' && ( */}
-        {/*    <p>Alphabetical characters only</p> */}
-        {/*  )} */}
-        {/*  <label>Last Name</label> */}
-        {/*  <input {...register('lastName', { pattern: /^[A-Za-z]+$/i })} /> */}
-        {/*  {errors?.lastName?.type === 'pattern' && ( */}
-        {/*    <p>Alphabetical characters only</p> */}
-        {/*  )} */}
-        {/*  <label htmlFor="email">email</label> */}
-        {/*  <input */}
-        {/*    id="email" */}
-        {/*    defaultValue="testttttttttt" */}
-        {/*    aria-invalid={errors.email ? 'true' : 'false'} */}
-        {/*    {...register('email', { */}
-        {/*      required: 'required', */}
-        {/*      pattern: { */}
-        {/*        value: /\S+@\S+\.\S+/, */}
-        {/*        message: 'Entered value does not match email format', */}
-        {/*      }, */}
-        {/*    })} */}
-        {/*    type="email" */}
-        {/*    placeholder="example@mail.com" */}
-        {/*  /> */}
-        {/*  <label htmlFor="password">password</label> */}
-        {/*  <input */}
-        {/*    id="password" */}
-        {/*    defaultValue="" */}
-        {/*    aria-invalid={errors.password ? 'true' : 'false'} */}
-        {/*    {...register('password', { */}
-        {/*      required: 'required', */}
-        {/*      minLength: { */}
-        {/*        value: 5, */}
-        {/*        message: 'min length is 5', */}
-        {/*      }, */}
-        {/*    })} */}
-        {/*    type="password" */}
-        {/*    placeholder="password" */}
-        {/*  /> */}
-        {/* </section> */}
-        <button type="submit">REGISTER</button>
-      </form>
-    </>
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  fullWidth
+                  type="email"
+                  {...field}
+                  id="email"
+                  label="Email Address"
+                />
+              )}
+            />
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  fullWidth
+                  type="password"
+                  id="password"
+                  label="password"
+                  {...field}
+                />
+              )}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign Up
+            </Button>
+            <Copyright sx={{ mt: 5 }} />
+          </Box>
+        </Box>
+      </Grid>
+    </Grid>
   );
 };
-
 export default SignUp;
