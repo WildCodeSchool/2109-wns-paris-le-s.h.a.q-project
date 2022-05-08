@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { useMutation } from '@apollo/client';
 import CreateTaskMutation from 'graphql/task/CreateTaskMutation';
-import { ICreateTask, IAddTaskForm } from 'interfaces';
+import { IAddTaskForm, ICreateTask } from 'interfaces';
 import TaskInput from './TaskInput';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import { Typography } from '@material-ui/core';
 
 const styled = {
   input: {
