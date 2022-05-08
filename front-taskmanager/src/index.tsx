@@ -1,10 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
+import {
+  ApolloClient,
+  ApolloProvider,
+  createHttpLink,
+  InMemoryCache,
+} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import './index.css';
+import { ThemeProvider } from '@mui/material/styles';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+import theme from './style/theme';
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:5050//graphql',
@@ -17,11 +25,10 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `${token}` : "",
-    }
-  }
+      authorization: token ? `${token}` : '',
+    },
+  };
 });
-
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
@@ -30,8 +37,10 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ApolloProvider client={client}> 
-      <App />
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
