@@ -9,6 +9,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import './index.css';
 import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
@@ -39,6 +40,7 @@ ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <App />
       </ThemeProvider>
     </ApolloProvider>

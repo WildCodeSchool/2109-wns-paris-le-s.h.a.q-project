@@ -6,7 +6,7 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { visuallyHidden } from '@mui/utils';
-import { IEnhancedTableProps, ITaskData, IHeadCell } from 'interfaces';
+import { IEnhancedTableProps, IHeadCell, ITaskData } from 'interfaces';
 
 const headCells: readonly IHeadCell[] = [
   {
@@ -40,7 +40,7 @@ const EnhancedTableHead = (props: IEnhancedTableProps) => {
 
   return (
     <TableHead>
-      <TableRow sx={{ backgroundColor: '#6495ed' }}>
+      <TableRow sx={{ backgroundColor: 'primary.main' }}>
         <TableCell padding="checkbox">
           <Checkbox
             sx={{ color: 'white', justifyContent: 'center' }}
@@ -57,7 +57,7 @@ const EnhancedTableHead = (props: IEnhancedTableProps) => {
               textTransform: 'uppercase',
             }}
             key={headCell.id}
-            align={'center'}
+            align="center"
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >

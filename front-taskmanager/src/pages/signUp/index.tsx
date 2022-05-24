@@ -3,7 +3,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -23,7 +22,7 @@ function Copyright(props: any) {
     >
       {'Copyright © '}
       <Link to="https://mui.com/">Your Website</Link> {new Date().getFullYear()}
-      {'.'}
+      .
     </Typography>
   );
 }
@@ -52,7 +51,6 @@ const SignUp = () => {
 
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
-      <CssBaseline />
       <Grid
         item
         xs={false}

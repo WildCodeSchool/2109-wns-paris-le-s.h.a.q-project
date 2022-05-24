@@ -1,19 +1,19 @@
 import React from 'react';
 import {
+  Checkbox,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TablePagination,
   TableRow,
-  Paper,
-  Checkbox,
-} from '@mui/material'
-import EnhancedTableHead from './EnhancedTableHead';
-import EnhancedTableToolbar from './EnhancedTableToolbar';
+} from '@mui/material';
 import { ITaskData } from 'interfaces';
 import { TOrder } from 'types';
 import { FGetComparator, FStableSort } from 'functions';
+import EnhancedTableToolbar from './EnhancedTableToolbar';
+import EnhancedTableHead from './EnhancedTableHead';
 
 const TaskTable = ({ data, refetch }: any) => {
   const [order, setOrder] = React.useState<TOrder>('asc');
@@ -127,11 +127,9 @@ const TaskTable = ({ data, refetch }: any) => {
                       sx={
                         index % 2
                           ? {
-                              backgroundColor: '#dde9ff48',
                               textTransform: 'capitalize',
                             }
                           : {
-                              backgroundColor: 'white',
                               textTransform: 'capitalize',
                             }
                       }

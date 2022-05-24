@@ -7,7 +7,7 @@ import Task from './pages/task';
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SignIn />} />

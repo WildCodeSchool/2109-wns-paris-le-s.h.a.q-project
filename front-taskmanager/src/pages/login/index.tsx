@@ -10,7 +10,6 @@ import {
   Button,
   Checkbox,
   CircularProgress,
-  CssBaseline,
   FormControlLabel,
   Grid,
   Paper,
@@ -90,7 +89,6 @@ export default function SignIn() {
 
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
-      <CssBaseline />
       <Grid
         item
         xs={false}
