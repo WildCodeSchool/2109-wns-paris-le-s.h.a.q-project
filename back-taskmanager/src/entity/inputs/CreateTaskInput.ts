@@ -1,4 +1,4 @@
-import { ID, InputType, Field } from 'type-graphql';
+import { Field, ID, InputType } from 'type-graphql';
 
 @InputType()
 export default class CreateTaskInput {
@@ -32,6 +32,8 @@ export default class CreateTaskInput {
   @Field({ nullable: true })
   deadline?: string;
 
+  @Field({ nullable: true })
+  author?: string;
   /*   @Field()
   document_upload?: String; */
 }

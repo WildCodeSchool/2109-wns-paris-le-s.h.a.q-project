@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
-import { ID, ObjectType, Field } from 'type-graphql';
-import Project from './Project';
-import User from './User';
+import { Field, ID, ObjectType } from "type-graphql";
+import Project from "./Project";
+import User from "./User";
 
 @ObjectType()
 export default class Task {
@@ -25,6 +25,9 @@ export default class Task {
 
   @Field(() => ID)
   user!: keyof User;
+
+  @Field(() => String)
+  author!: keyof User['email'];
 
   @Field({ nullable: true })
   initial_time_estimation?: number;

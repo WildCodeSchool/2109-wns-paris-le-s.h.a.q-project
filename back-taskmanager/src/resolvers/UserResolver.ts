@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
 /* eslint-disable class-methods-use-this */
-import bcrypt from 'bcryptjs';
-import { Resolver, Query, Mutation, Arg, UseMiddleware } from 'type-graphql';
-import CreateUserInput from '../entity/inputs/CreateUserInput';
-import User from '../entity/entities/User';
-import UserModel from '../models/UserModel';
-import logger from '../modules/middleware/logger';
-import UpdateUserInput from '../entity/inputs/UpdateUserInput';
+import bcrypt from "bcryptjs";
+import { Arg, Mutation, Query, Resolver, UseMiddleware } from "type-graphql";
+import CreateUserInput from "../entity/inputs/CreateUserInput";
+import User from "../entity/entities/User";
+import UserModel from "../models/UserModel";
+import logger from "../modules/middleware/logger";
+import UpdateUserInput from "../entity/inputs/UpdateUserInput";
 
 @Resolver(User)
 class UserResolver {
@@ -33,7 +33,7 @@ class UserResolver {
   }
 
   @Mutation(() => User)
-  async updateTask(@Arg('id') _id: string, @Arg('data') data: UpdateUserInput) {
+  async updateUser(@Arg('id') _id: string, @Arg('data') data: UpdateUserInput) {
     const user = await UserModel.findOne({ _id }).exec();
     if (!user) throw new Error('Task not found!');
     if (user !== null && user !== undefined) {
@@ -53,4 +53,5 @@ class UserResolver {
     return true;
   }
 }
+
 export default UserResolver;

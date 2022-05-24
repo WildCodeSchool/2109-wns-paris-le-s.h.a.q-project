@@ -1,47 +1,38 @@
 /* eslint-disable import/no-cycle */
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-// export interface UserData {
-//   id: string;
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   password: string;
-//   photo?: string;
-//   role: 'admin' | 'developer' | 'project manager' | 'other' | undefined;
-// }
+export interface UserData {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  photo?: string;
+  role: 'admin' | 'developer' | 'project manager' | 'other' | undefined;
+}
 
 const { Schema } = mongoose;
-const UserSchema = new Schema(
+const UserSchema = new Schema<UserData>(
   {
     firstName: {
       type: String,
-      required: true,
     },
     lastName: {
       type: String,
-      required: true,
     },
     email: {
       type: String,
-      required: true,
     },
     password: {
       type: String,
-      required: true,
     },
-    // task: {
-    //   type: mongoose.Types.ObjectId,
-    //   ref: "task",
-    // },
     photo: {
       type: String,
-      required: false,
     },
     role: {
       type: String,
       enum: ['admin', 'developer', 'project manager', 'other'],
-      default: 'admin',
+      default: 'developer',
     },
   },
   {

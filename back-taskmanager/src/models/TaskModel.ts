@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { UserData } from './UserModel';
 
 interface TaskData {
   id: string | number;
@@ -12,6 +13,7 @@ interface TaskData {
   initial_time_spent: number;
   advancement: number;
   deadline: string;
+  author: keyof UserData['email'];
 }
 
 const { Schema } = mongoose;
@@ -26,6 +28,7 @@ const TaskSchema = new Schema<TaskData>({
   initial_time_spent: Number,
   advancement: Number,
   deadline: String,
+  author: String,
 });
 
 export default mongoose.model<TaskData>('task', TaskSchema);

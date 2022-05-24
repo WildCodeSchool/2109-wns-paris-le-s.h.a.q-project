@@ -1,11 +1,13 @@
 /* eslint-disable no-console */
 /* eslint-disable class-methods-use-this */
-import { Resolver, Query, Mutation, Arg, Authorized } from 'type-graphql';
+import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
 // import { isAuth } from '../modules/middleware/isAuth';
-import CreateTaskInput from '../entity/inputs/CreateTaskInput';
-import UpdateTaskInput from '../entity/inputs/UpdateTaskInput';
-import Task from '../entity/entities/Task';
-import TaskModels from '../models/TaskModel';
+import { JwtPayload } from "jsonwebtoken";
+import { ApolloError } from "apollo-server";
+import CreateTaskInput from "../entity/inputs/CreateTaskInput";
+import UpdateTaskInput from "../entity/inputs/UpdateTaskInput";
+import Task from "../entity/entities/Task";
+import TaskModels from "../models/TaskModel";
 
 @Resolver(Task)
 class TaskResolver {
@@ -17,12 +19,18 @@ class TaskResolver {
   }
 
   @Mutation(() => Task)
-  async createTask(@Arg('input') createTaskInput: CreateTaskInput) {
+  async createTask(
+    @Ctx() ctx: JwtPayload,
+    @Arg('input') createTaskInput: CreateTaskInput
+  ) {
     try {
       const newTask = new TaskModels(createTaskInput);
-      await newTask.save();
-      console.log('newTask', newTask);
-      return newTask;
+      if (ctx && ctx.authenticatedUserEmail) {
+        newTask.author = ctx.authenticatedUserEmail;
+        await newTask.save();
+        return newTask;
+      }
+      return new ApolloError('Not Authorized');
     } catch (err) {
       return console.log(err);
     }
@@ -45,24 +53,38 @@ class TaskResolver {
   }
 
   @Mutation(() => Task)
-  async updateTask(@Arg('id') _id: string, @Arg('data') data: UpdateTaskInput) {
-    const task = await TaskModels.findOne({ _id }).exec();
-    if (!task) throw new Error('Task not found!');
-    if (task !== null && task !== undefined) {
-      Object.assign(task, data);
-      await task.save();
+  async updateTask(
+    @Ctx() ctx: JwtPayload,
+    @Arg('id') _id: string,
+    @Arg('data') data: UpdateTaskInput
+  ) {
+    if (ctx && ctx.authenticatedUserEmail) {
+      const task = await TaskModels.findOne({ _id }).exec();
+      if (!task) throw new Error('Task not found!');
+      if (task?.author !== ctx.authenticatedUserEmail) {
+        return new ApolloError('Not Authorized');
+      }
+      if (task !== null && task !== undefined) {
+        Object.assign(task, data);
+        await task.save();
+        return task;
+      }
     }
-    return task;
+    return new ApolloError('Not Authorized');
   }
 
   @Mutation(() => Boolean)
-  async deleteTask(@Arg('id') _id: string) {
-    const task = await TaskModels.findOne({ _id }).exec();
-    if (!task) throw new Error('Task not found!');
-    if (task !== null && task !== undefined) {
-      await task.remove();
+  async deleteTask(@Ctx() ctx: JwtPayload, @Arg('id') _id: string) {
+    if (ctx && ctx.authenticatedUserEmail) {
+      const task = await TaskModels.findOne({ _id }).exec();
+      if (!task) throw new Error('Task not found!');
+      if (task?.author === ctx.authenticatedUserEmail) {
+        await task.remove();
+      }
+      return true;
     }
-    return true;
+    return new ApolloError('Not Authorized');
   }
 }
+
 export default TaskResolver;
