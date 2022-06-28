@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable class-methods-use-this */
-import { Resolver, Query, Mutation, Arg } from 'type-graphql';
+import { Arg, Mutation, Query, Resolver  } from 'type-graphql';
 import CreateProjectInput from '../entity/inputs/CreateProjectInput';
 import Project from '../entity/entities/Project';
 import ProjectModel from '../models/ProjectModel';
@@ -14,7 +14,8 @@ class ProjectResolver {
     }
 
     @Mutation(() => Project)
-    async createProject(@Arg('input') createProjectInput: CreateProjectInput) {
+    async createProject(
+      @Arg('input') createProjectInput: CreateProjectInput) {
       try {
         const newProject = new ProjectModel(createProjectInput);
         await newProject.save();

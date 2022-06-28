@@ -1,41 +1,28 @@
 /* eslint-disable import/no-cycle */
 import mongoose from 'mongoose';
 
-// interface CommentData {
-//   _id: string;
-//   author: Types.ObjectId;
-//   content: string;
-//   avatar?: string;
-//   status: 'draft' | 'published' | 'trashed' | undefined;
-//   task: Types.ObjectId;
-// }
+interface CommentData {
+  id: string;
+  user: string;
+  content: string;
+  status: 'draft' | 'published' | 'trashed' | undefined;
+  task: string;
+  createDate?: Date | string;
+}
 
 const { Schema } = mongoose;
-const CommentSchema = new Schema(
+const CommentSchema = new Schema<CommentData>(
   {
-    user: {
-      type: mongoose.Types.ObjectId,
-      ref: "user",
-    },
+    user: String,
     content: String,
-    avatar: String,
+    task: String,
+    createDate: { type: Date, default: Date.now },
     status: {
       type: String,
       enum: ['draft', 'published', 'trashed'],
       default: 'draft',
-    },
-    task: {
-      type: mongoose.Types.ObjectId,
-      ref: 'task',
-      required: true,
-    },
+    }
   },
-  {
-    timestamps: {
-      createdAt: 'createdAt',
-      updatedAt: 'updatedAt',
-    },
-  }
 );
 
 export default mongoose.model('comment', CommentSchema);
