@@ -10,6 +10,8 @@ export interface ProjectData {
   projectOwner?: keyof UserData['email'] | string;
   tasks: string[];
   members: string[];
+  user: string;
+  creator: string;
   initial_time_estimation: number;
   spent_time: number;
   deadline: string;
@@ -25,6 +27,8 @@ const ProjectSchema = new Schema<ProjectData>(
     members: [{ type: Schema.Types.ObjectId, ref: 'user' }], 
     initial_time_estimation: Number,
     spent_time: Number,
+    creator: String,
+    user: String,
     deadline: String,
   },
   {

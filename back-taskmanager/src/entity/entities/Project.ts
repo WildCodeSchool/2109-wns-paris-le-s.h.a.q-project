@@ -14,14 +14,20 @@ class Project {
   @Field()
   subject?: string;
 
-  @Field(() => String)
-  projectOwner?: keyof User['email'] | string;
+  // @Field(() => String)
+  // projectOwner?: keyof User['email'] | string;
 
   @Field(() => [ID])
   members?: string[];
 
   @Field(() => [ID])
   tasks?: string[];
+
+  @Field(() => ID, { nullable: true })
+  user?: string;
+
+  @Field(() => String)
+  creator?: keyof User['email'] | string;
 
   @Field({ nullable: true })
   initial_time_estimation?: number;

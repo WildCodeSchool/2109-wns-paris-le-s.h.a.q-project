@@ -31,6 +31,12 @@ const TaskSchema = new Schema<TaskData>({
   time_spent: Number,
   advancement: Number,
   deadline: String,
+},
+{
+  timestamps: {
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+  },
 });
 
 export default mongoose.model<TaskData>('task', TaskSchema);
