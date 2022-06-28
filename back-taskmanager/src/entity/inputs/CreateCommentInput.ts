@@ -15,6 +15,4 @@ export default class CreateCommentInput {
   @Field()
   status?: string;
 
-  @Field()
-  createDate?: Date; 
 }

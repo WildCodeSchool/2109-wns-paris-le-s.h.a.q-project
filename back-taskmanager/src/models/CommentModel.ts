@@ -7,7 +7,6 @@ interface CommentData {
   content: string;
   status: 'draft' | 'published' | 'trashed' | undefined;
   task: string;
-  createDate?: Date | string;
 }
 
 const { Schema } = mongoose;
@@ -16,13 +15,18 @@ const CommentSchema = new Schema<CommentData>(
     user: String,
     content: String,
     task: String,
-    createDate: { type: Date, default: Date.now },
     status: {
       type: String,
       enum: ['draft', 'published', 'trashed'],
       default: 'draft',
     }
   },
+  {
+    timestamps: {
+      createdAt: 'createdAt',
+      updatedAt: 'updatedAt',
+    },
+  }
 );
 
 export default mongoose.model('comment', CommentSchema);

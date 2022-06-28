@@ -17,6 +17,4 @@ export default class Comment {
   @Field()
   status?: string;
 
-  @Field()
-  createDate?: Date; 
 }
