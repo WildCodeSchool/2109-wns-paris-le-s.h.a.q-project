@@ -21,7 +21,7 @@ export default class LoginResolver {
         {
           user: user.email,
         },
-        jwtKey
+        jwtKey as string
       );
       return token;
     }

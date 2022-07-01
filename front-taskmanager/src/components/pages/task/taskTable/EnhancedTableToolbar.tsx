@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useMutation } from '@apollo/client';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -13,6 +13,8 @@ import { IEnhancedTableToolbarProps } from 'interfaces';
 import DeleteTaskMutation from 'graphql/task/DeleteTaskMutation';
 import AlertDialogCreateTask from 'components/pages/task/taskForm/AlertDialogCreateTask';
 import { Grid } from '@mui/material';
+import MenuListComposition from "../../../shared/MenuListComposition";
+
 
 const EnhancedTableToolbar = (props: IEnhancedTableToolbarProps) => {
   const { numSelected, elementId, setSelected, refetch } = props;
@@ -122,11 +124,8 @@ const EnhancedTableToolbar = (props: IEnhancedTableToolbarProps) => {
                   {numSelected} selected
                 </Typography>
               ) : null}
-              <Tooltip title="Filter list">
-                <IconButton>
-                  <FilterListIcon />
-                </IconButton>
-              </Tooltip>
+
+                <MenuListComposition/>
             </Toolbar>
           </Grid>
         </Grid>

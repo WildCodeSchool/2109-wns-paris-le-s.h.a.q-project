@@ -1,4 +1,5 @@
 import { ID, ObjectType, Field } from 'type-graphql';
+import {prop} from "@typegoose/typegoose";
 
 @ObjectType()
 class User {
@@ -12,6 +13,7 @@ class User {
   lastName!: string;
 
   @Field()
+  @prop({unique: true})
   email!: string;
 
   @Field()

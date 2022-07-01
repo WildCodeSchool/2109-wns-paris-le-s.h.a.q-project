@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useLazyQuery } from '@apollo/client';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
   Avatar,
@@ -15,10 +15,17 @@ import {
   Paper,
   TextField,
   Typography,
+  Link
 } from '@mui/material';
+import {EmotionJSX} from "@emotion/react/types/jsx-namespace";
+import { yupResolver } from '@hookform/resolvers/yup/'
 import LOGIN from '../../graphql/signin/Login';
+import TaskInput from "../../components/pages/task/taskForm/TaskInput";
+import validationSchema from "../../schema/login/validationSchema";
+import ButtonNavigateToHome from "../../components/shared/ButtonNavigateToHome";
 
-function Copyright(props: any) {
+
+export function Copyright(props: any) {
   return (
     <Typography
       variant="body2"
@@ -27,7 +34,7 @@ function Copyright(props: any) {
       {...props}
     >
       {'Copyright © '}
-      <Link to="https://mui.com/">Your Website</Link> {new Date().getFullYear()}
+      <Link href="https://github.com/WildCodeSchool/2109-wns-paris-le-s.h.a.q-project.git" target="_blank">Task Manager Github</Link> {new Date().getFullYear()}
       .
     </Typography>
   );
@@ -40,18 +47,28 @@ interface ISignInInput {
 
 export default function SignIn() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(localStorage.getItem('token')) {
+      navigate('/task', { replace: true });
+    }
+
+  })
+
   const [
     getLogin,
     { loading: loginLoading, error: loginError, data: loginData },
   ] = useLazyQuery(LOGIN);
   const {
+    reset,
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<ISignInInput>();
+  } = useForm<ISignInInput>({
+    resolver: yupResolver(validationSchema),
+  });
 
   if (loginLoading) {
-    console.log('loginLoading | ', loginLoading);
     return (
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -61,31 +78,25 @@ export default function SignIn() {
       </Backdrop>
     );
   }
-  if (loginError) {
-    console.log('loginError | ', loginError);
-    return (
-      <Typography variant="body1" component="p">
-        {loginError.message}
-      </Typography>
-    );
-  }
-  // const submitForm = async (input: ICreateTask) => {
-  //   reset();
-  //   await addTask({ variables: { input: input } });
-  //   refetch();
-  //   handleCloseAddTask();
-  // };
 
   const submitForm = async (dataForm: ISignInInput) => {
-    await getLogin({
-      variables: { ...dataForm },
-    });
-    navigate('/task', { replace: true });
+    try {
+      await getLogin({
+        variables: { ...dataForm },
+      });
+
+    } catch {
+      reset()
+
+    }
+
   };
   if (loginData) {
-    console.log('loginData | ', loginData);
     localStorage.setItem('token', loginData.login);
+    navigate('/task', { replace: true });
   }
+
+
 
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
@@ -118,48 +129,42 @@ export default function SignIn() {
           <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
+          <Typography component="h1" variant="h3">
+            Task Manager
           </Typography>
+          <Typography component="h2" variant="h5">
+            Se connecter
+          </Typography>
+
           <Box
             component="form"
             noValidate
             onSubmit={handleSubmit(submitForm)}
-            sx={{ mt: 1 }}
+            sx={{ mt: 3 }}
           >
-            <Controller
-              name="email"
-              defaultValue=""
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  fullWidth
-                  type="email"
-                  {...field}
-                  id="email"
-                  label="Adresse Email"
-                  variant="outlined"
-                />
-              )}
+            <TaskInput
+                control={control}
+                name="email"
+                label="Adresse email"
+                type="email"
+                styled={{mb: 2}}
+                error={!!errors.email}
+                helperText={errors.email?.message}
+                fullWidth
             />
-            <Controller
-              name="password"
-              defaultValue=""
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  type="password"
-                  id="password"
-                  label="password"
-                  {...field}
-                />
-              )}
+            <TaskInput
+                control={control}
+                name="password"
+                label="Mot de passe"
+                type="password"
+                error={!!errors.password}
+                helperText={errors.password?.message}
+                fullWidth
             />
+
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label="Se souvenir de moi"
             />
             <Button
               type="submit"
@@ -167,20 +172,21 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Connexion
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link to="#">Forgot password?</Link>
+                <Link href="#">Mot de passe oublié ?</Link>
               </Grid>
               <Grid item>
-                <Link to="/signup">Don't have an account? Sign Up</Link>
+                <Link href="/signup">Pas encore de compte ? Enregistrez vous</Link>
               </Grid>
             </Grid>
-            <Copyright sx={{ mt: 5 }} />
+            <Copyright sx={{ mt: 10 }} />
           </Box>
         </Box>
       </Grid>
     </Grid>
   );
 }
+

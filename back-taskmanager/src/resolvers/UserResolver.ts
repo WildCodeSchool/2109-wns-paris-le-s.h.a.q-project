@@ -2,22 +2,23 @@
 /* eslint-disable class-methods-use-this */
 import bcrypt from "bcryptjs";
 import { Arg, Mutation, Query, Resolver, UseMiddleware } from "type-graphql";
+import jwt from "jsonwebtoken";
 import CreateUserInput from "../entity/inputs/CreateUserInput";
 import User from "../entity/entities/User";
 import UserModel from "../models/UserModel";
 import logger from "../modules/middleware/logger";
 import UpdateUserInput from "../entity/inputs/UpdateUserInput";
+import {jwtKey} from "../createServer";
 
 @Resolver(User)
 class UserResolver {
-  @UseMiddleware(logger)
   @Query(() => [User])
   async allUsers() {
     const users = await UserModel.find();
     return users;
   }
 
-  @Mutation(() => User)
+  @Mutation(() => String)
   async createUser(@Arg('input') createUserInput: CreateUserInput) {
     try {
       const newUser = new UserModel({
@@ -25,8 +26,14 @@ class UserResolver {
         password: bcrypt.hashSync(createUserInput.password, 10),
       });
       await newUser.save();
-      console.log('newUser', newUser);
-      return newUser;
+      const token = jwt.sign(
+          {
+            user: newUser.email,
+          },
+          jwtKey as string
+      );
+      return token;
+
     } catch (err) {
       return console.log(err);
     }

@@ -12,11 +12,11 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
 import theme from './style/theme';
 
+
 const httpLink = createHttpLink({
-  uri: 'http://localhost:5050//graphql',
+  uri: `http://localhost:5050/graphql`,
 });
 
 const authLink = setContext((_, { headers }) => {

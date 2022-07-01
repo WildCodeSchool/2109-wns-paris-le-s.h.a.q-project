@@ -14,6 +14,7 @@ const themeOptions: ThemeOptions = {
       dark: '#6a0080',
     },
   },
+
 };
 
 const theme = createTheme(themeOptions);

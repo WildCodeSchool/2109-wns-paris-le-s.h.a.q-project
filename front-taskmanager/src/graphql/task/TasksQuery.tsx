@@ -10,6 +10,7 @@ const TasksQuery = gql`
       status
       priority
       user
+      author
       initial_time_estimation
       initial_time_spent
       advancement

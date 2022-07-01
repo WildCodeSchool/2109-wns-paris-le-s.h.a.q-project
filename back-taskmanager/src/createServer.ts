@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { ApolloError, ApolloServer, AuthenticationError } from 'apollo-server';
-import { buildSchema, Ctx } from 'type-graphql';
+import { buildSchema } from 'type-graphql';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
 import TaskResolver from './resolvers/TaskResolver';

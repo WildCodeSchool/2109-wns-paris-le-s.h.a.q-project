@@ -24,7 +24,6 @@ const TaskTable = ({ data, refetch }: any) => {
   const [rowsPerPage, setRowsPerPage] = React.useState<number>(10);
 
   const rows = data;
-
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
     property: keyof ITaskData

@@ -1,11 +1,13 @@
-import ITaskData from '../ITaskData';
 
 interface ITaskInput {
   control: any;
-  name: keyof ITaskData;
+  name: string;
   label: string;
   type: string;
-  styled: any;
+  styled?: any;
+  helperText?: string;
+  error?: boolean;
+  fullWidth?: boolean;
 }
 
 export default ITaskInput;

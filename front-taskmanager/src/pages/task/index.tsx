@@ -1,18 +1,27 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useQuery } from '@apollo/client';
 import TasksQuery from 'graphql/task/TasksQuery';
 import TaskTable from 'components/pages/task/taskTable';
 import {
-  Backdrop,
+  Backdrop, Button,
   CircularProgress,
   Container,
   Grid,
   Typography,
 } from '@mui/material';
+import {useNavigate} from "react-router-dom";
+import ButtonNavigateToHome from "../../components/shared/ButtonNavigateToHome";
 
 const Task = () => {
-  const { loading, error, data, refetch } = useQuery(TasksQuery);
+    const navigate = useNavigate();
+    useEffect(() => {
+        if(!localStorage.getItem('token')) {
+            navigate('/', { replace: true });
+        }
+    })
 
+
+    const { loading, error, data, refetch } = useQuery(TasksQuery);
   if (loading) {
     return (
       <Backdrop sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} open>
@@ -22,9 +31,13 @@ const Task = () => {
   }
   if (error) {
     return (
-      <Typography variant="body1" component="p">
-        {error.message}
-      </Typography>
+        <>
+          <Typography variant="body1" component="p">
+            {error.message}
+          </Typography>
+  <ButtonNavigateToHome />
+
+        </>
     );
   }
   return (

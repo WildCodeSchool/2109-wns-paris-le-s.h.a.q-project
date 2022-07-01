@@ -8,10 +8,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import AddTask from '@mui/icons-material/AddTask';
 import Clear from '@mui/icons-material/Clear';
-import AddTaskForm from './AddTaskForm';
 import { IAddTaskForm } from 'interfaces';
 
 import { Dispatch, SetStateAction } from 'react';
+import AddTaskForm from './AddTaskForm';
 
 // interface IAlertDialogCreateTask {
 //   handleCloseAddTask: () => void;
@@ -23,8 +23,7 @@ const AlertDialogCreateTask = ({
   refetch,
   openAddTask,
   handleCloseAddTask,
-}: IAddTaskForm) => {
-  return (
+}: IAddTaskForm) => (
     <div>
       <Dialog open={openAddTask} onClose={handleCloseAddTask}>
         <DialogTitle
@@ -55,7 +54,7 @@ const AlertDialogCreateTask = ({
           </Button>
           <Button
             type="submit"
-            form="test"
+            form="addTask"
             startIcon={<AddTask />}
             variant="outlined"
             color="success"
@@ -66,6 +65,5 @@ const AlertDialogCreateTask = ({
       </Dialog>
     </div>
   );
-};
 
 export default AlertDialogCreateTask;

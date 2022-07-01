@@ -1,55 +1,82 @@
 import * as React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import {  useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { Link, useNavigate } from 'react-router-dom';
+import {Link, Avatar, Button, Paper, Box, Grid, Typography, Backdrop, CircularProgress} from '@mui/material'
+import { yupResolver } from '@hookform/resolvers/yup/'
+import {useNavigate} from "react-router-dom";
+import {useEffect} from "react";
 import SIGNUP from '../../graphql/signin/Signup';
+import { Copyright } from '../login'
+import validationSchema from "../../schema/signUp/validationSchema";
+import TaskInput from "../../components/pages/task/taskForm/TaskInput";
+import ButtonNavigateToHome from "../../components/shared/ButtonNavigateToHome";
 
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {'Copyright © '}
-      <Link to="https://mui.com/">Your Website</Link> {new Date().getFullYear()}
-      .
-    </Typography>
-  );
-}
 
-interface ISignUnInput {
+interface ISignUpInput {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
 const SignUp = () => {
+    const navigate = useNavigate()
+    useEffect(() => {
+        if(localStorage.getItem('token')) {
+            navigate('/task', { replace: true });
+        }
+    })
+
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm<ISignUnInput>();
-  const [createUser, { loading, error, data }] = useMutation(SIGNUP);
-  const navigate = useNavigate();
-  const submitForm = async (dataForm: ISignUnInput) => {
-    await createUser({
-      variables: { createUserInput: dataForm },
-    });
-    navigate('/');
-  }; // form submit function which will invoke after successful validation
 
-  return (
+  } = useForm<ISignUpInput>({
+      resolver: yupResolver(validationSchema),
+  });
+
+  const [createUser, { loading, error, data }] = useMutation(SIGNUP);
+
+    if (loading) {
+        return (
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+        );
+    }
+
+    const submitForm = async (dataForm: ISignUpInput) => {
+        const { firstName, lastName, email, password } = dataForm;
+            try {
+                await createUser({
+                    variables: { createUserInput: {
+                            firstName,
+                            lastName,
+                            email,
+                            password
+                        }
+                    },
+                });
+            } catch (e) {
+                navigate('/', { replace: true });
+            }
+
+    };
+
+    if (data) {
+         localStorage.setItem('token', data.createUser);
+         navigate('/task', { replace: true });
+    }
+
+
+    return (
     <Grid container component="main" sx={{ height: '100vh' }}>
       <Grid
         item
@@ -70,7 +97,6 @@ const SignUp = () => {
       <Grid item xs={12} sm={4} md={5} component={Paper} elevation={6} square>
         <Box
           sx={{
-            my: 8,
             mx: 4,
             display: 'flex',
             flexDirection: 'column',
@@ -80,74 +106,85 @@ const SignUp = () => {
           <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign Up
-          </Typography>
+            <Typography component="h1" variant="h3">
+                Task Manager
+            </Typography>
+            <Typography component="h2" variant="h5">
+                S&#39;enregistrer
+            </Typography>
           <Box
             component="form"
             noValidate
             onSubmit={handleSubmit(submitForm)}
-            sx={{ mt: 1 }}
+            sx={{ mt: 3 }}
           >
-            <Controller
-              name="firstName"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  id="firstName"
+              <TaskInput
+                  control={control}
+                  name="lastName"
+                  label="Nom"
+                  type="lastName"
+                  styled={{mb: 1}}
+                  error={!!errors.lastName}
+                  helperText={errors.lastName?.message}
                   fullWidth
-                  label="First Name"
-                />
-              )}
-            />
-            <Controller
-              name="lastName"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  id="lastName"
+              />
+
+              <TaskInput
+                  control={control}
+                  name="firstName"
+                  label="Prénom"
+                  type="firstName"
+                  styled={{my: 2}}
+                  error={!!errors.firstName}
+                  helperText={errors.firstName?.message}
                   fullWidth
-                  label="Last Name"
-                />
-              )}
-            />
-            <Controller
-              name="email"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  fullWidth
+              />
+
+              <TaskInput
+                  control={control}
+                  name="email"
+                  label="Adresse email"
                   type="email"
-                  {...field}
-                  id="email"
-                  label="Email Address"
-                />
-              )}
-            />
-            <Controller
-              name="password"
-              control={control}
-              render={({ field }) => (
-                <TextField
+                  error={!!errors.email}
+                  helperText={errors.email?.message}
                   fullWidth
+              />
+              <TaskInput
+                  control={control}
+                  name="password"
+                  label="Mot de passe"
                   type="password"
-                  id="password"
-                  label="password"
-                  {...field}
-                />
-              )}
-            />
-            <Button
+                  styled={{my: 2}}
+                  error={!!errors.password}
+                  helperText={errors.password?.message}
+                  fullWidth
+              />
+              <TaskInput
+                  control={control}
+                  name="confirmPassword"
+                  label="Confirmer mot de passe"
+                  type="password"
+                  error={!!errors.confirmPassword}
+                  helperText={errors.confirmPassword?.message}
+                  fullWidth
+              />
+
+
+              <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              création du compte
             </Button>
-            <Copyright sx={{ mt: 5 }} />
+              <Grid container justifyContent="end" mt={2}>
+                  <Grid item>
+                      <Link href="/">Déjà enregistré ? Connectez vous directement</Link>
+                  </Grid>
+              </Grid>
+
+              <Copyright sx={{ mt: 5 }} />
           </Box>
         </Box>
       </Grid>
